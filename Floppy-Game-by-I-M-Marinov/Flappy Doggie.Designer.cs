@@ -111,9 +111,8 @@
             scoreText.Font = new Font("Little Dinosaur", 26.25F, FontStyle.Regular, GraphicsUnit.Point);
             scoreText.Location = new Point(151, 15);
             scoreText.Name = "scoreText";
-            scoreText.Size = new Size(39, 36);
+            scoreText.Size = new Size(0, 36);
             scoreText.TabIndex = 6;
-            scoreText.Text = "0";
             // 
             // obstacleBottom2
             // 
