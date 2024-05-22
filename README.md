@@ -1,1 +1,1 @@
-# Floppy-Game-by-I-M-Marinov
+# Flappy-Game-by-I-M-Marinov
