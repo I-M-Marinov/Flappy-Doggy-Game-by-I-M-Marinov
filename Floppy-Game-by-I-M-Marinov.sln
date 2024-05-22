@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.8.34330.188
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Floppy-Game-by-I-M-Marinov", "Floppy-Game-by-I-M-Marinov\Floppy-Game-by-I-M-Marinov.csproj", "{4405E424-CABF-47DF-B67D-40A7FEB7256B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{4405E424-CABF-47DF-B67D-40A7FEB7256B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4405E424-CABF-47DF-B67D-40A7FEB7256B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4405E424-CABF-47DF-B67D-40A7FEB7256B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4405E424-CABF-47DF-B67D-40A7FEB7256B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {733FF6B5-83F2-4AF8-AE30-87C612746EE1}
+	EndGlobalSection
+EndGlobal
