@@ -1,4 +1,4 @@
-# Flappy-Doggie-Game-by-I-M-Marinov
+# Flappy-Doggy-Game-by-I-M-Marinov
 
 ## Description:
 
@@ -14,7 +14,7 @@
 
 ## Features
 - A C# Game that resembles the famous "Flappy Bird" game that took over the world in 2013 ( originally created by Dong Nguyen ).
-- Instead of a Bird, your playable character is a Corgi dog ( inspired by my own corgi doggie Joey ) 
+- Instead of a Bird, your playable character is a Corgi dog ( inspired by my own corgi doggy Joey ) 
 - Use the arrows to avoid the obstacles ( pipes ) and gain a point for every pipe/obstacle that you miss.
 
 <p align="center">
@@ -28,13 +28,16 @@
 </p>
 
 <p align="center">
-<img src="./flappy-doggie-game2.PNG">
+<img src="./flappy-doggie-game3.PNG">
 </p>
+
+## Last Updates: 
+
+- Retry Button added, so the user can restart the game without restarting the application
 
 
 ## Planned updates:
 
-- Restart Button ( because currently if the game is over you would have to restart the application to play again ) 
 - High Scores
 - Pause button
 
