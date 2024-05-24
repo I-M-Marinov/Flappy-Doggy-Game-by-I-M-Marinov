@@ -7,7 +7,7 @@
 ## Technology stack:
 - C#
 - .NET Core
-- Photoshop CS6 ( some of the images )
+- Photoshop CS6 ( some of the images ) + unsplash.com
 - Figma
   
 
