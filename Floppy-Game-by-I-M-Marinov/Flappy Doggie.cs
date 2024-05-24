@@ -1,8 +1,15 @@
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.Button;
+
 namespace Floppy_Game_by_I_M_Marinov
 {
 
     public partial class Form1 : Form
     {
+        private int initialObstacleBottomX;
+        private int initialObstacleTopX;
+        private int initialObstacleBottom2X;
+        private int initialObstacleTop2X;
+        private int initialDoggieY;
 
 
         public Form1()
@@ -11,7 +18,15 @@ namespace Floppy_Game_by_I_M_Marinov
             this.FormBorderStyle = FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
             gameOverLabel.Visible = false;
+            retryButton.Visible = false;
             this.KeyPreview = true;
+
+            /* save the initial positions of the doggie and obstacles */
+            initialObstacleBottomX = obstacleBottom.Left; 
+            initialObstacleTopX = obstacleTop.Left;
+            initialObstacleBottom2X = obstacleBottom2.Left;
+            initialObstacleTop2X = obstacleTop2.Left;
+            initialDoggieY = doggie.Top;
 
         }
 
@@ -100,12 +115,14 @@ namespace Floppy_Game_by_I_M_Marinov
             timer.Stop();
             gameOverLabel.Text = "Game Over !";
             gameOverLabel.Visible = true;
+            retryButton.Visible = true;
         }
 
         private void StartGame()
         {
             timer.Start();
         }
+
 
         private void startButton_Click(object sender, EventArgs e)
         {
@@ -114,5 +131,26 @@ namespace Floppy_Game_by_I_M_Marinov
             Focus(); // Ensure the form has focus to capture key events
         }
 
+        private void retryButton_Click(object sender, EventArgs e)
+        {
+            retryGame();
+        }
+
+        private void retryGame()
+        {
+            score = 0;
+            gravity = 3;
+            obstacleSpeed = 3;
+            speedIncreasedOnce = false;
+            /* call the doggy and obstacles's initial positions */
+            doggie.Top = initialDoggieY;
+            obstacleBottom.Left = initialObstacleBottomX;
+            obstacleTop.Left = initialObstacleTopX;
+            obstacleBottom2.Left = initialObstacleBottom2X;
+            obstacleTop2.Left = initialObstacleTop2X;
+            gameOverLabel.Visible = false;
+            retryButton.Visible = false; // Hide the retry button before restarting the game
+            timer.Start();
+        }
     }
 }

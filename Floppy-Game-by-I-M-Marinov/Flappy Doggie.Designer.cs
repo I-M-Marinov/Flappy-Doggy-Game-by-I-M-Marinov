@@ -41,6 +41,7 @@
             gameOverLabel = new Label();
             obstacleTop2 = new PictureBox();
             startButton = new Button();
+            retryButton = new Button();
             ((System.ComponentModel.ISupportInitialize)obstacleBottom).BeginInit();
             ((System.ComponentModel.ISupportInitialize)doggie).BeginInit();
             ((System.ComponentModel.ISupportInitialize)grass).BeginInit();
@@ -99,6 +100,7 @@
             scoreLabel.Size = new Size(133, 36);
             scoreLabel.TabIndex = 5;
             scoreLabel.Text = "Score:";
+            scoreLabel.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // timer
             // 
@@ -159,6 +161,21 @@
             startButton.UseVisualStyleBackColor = false;
             startButton.Click += startButton_Click;
             // 
+            // retryButton
+            // 
+            retryButton.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            retryButton.BackColor = Color.Gold;
+            retryButton.Font = new Font("Little Dinosaur", 15.7499981F, FontStyle.Regular, GraphicsUnit.Point);
+            retryButton.ForeColor = Color.Black;
+            retryButton.Location = new Point(503, 265);
+            retryButton.Name = "retryButton";
+            retryButton.Size = new Size(146, 49);
+            retryButton.TabIndex = 11;
+            retryButton.Tag = "retryButton";
+            retryButton.Text = "Retry";
+            retryButton.UseVisualStyleBackColor = false;
+            retryButton.Click += retryButton_Click;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -166,6 +183,7 @@
             BackColor = Color.LightSkyBlue;
             BackgroundImageLayout = ImageLayout.Stretch;
             ClientSize = new Size(1140, 555);
+            Controls.Add(retryButton);
             Controls.Add(startButton);
             Controls.Add(doggie);
             Controls.Add(scoreText);
@@ -202,5 +220,6 @@
         private Label gameOverLabel;
         private PictureBox obstacleTop2;
         private Button startButton;
+        private Button retryButton;
     }
 }
