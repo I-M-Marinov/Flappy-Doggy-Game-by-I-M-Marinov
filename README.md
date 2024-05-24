@@ -9,6 +9,7 @@
 - .NET Core
 - Photoshop CS6 ( some of the images ) + unsplash.com
 - Figma
+- Little Dinosour Font ( https://www.1001fonts.com/little-dinosaur-font.html )
   
 
 ## Features
