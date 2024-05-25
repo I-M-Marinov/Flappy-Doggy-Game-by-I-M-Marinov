@@ -40,6 +40,7 @@
 
 - High Scores
 - Pause button
+- Backgorund music and sounds when the doggy is moving up or down 
 
   
 
