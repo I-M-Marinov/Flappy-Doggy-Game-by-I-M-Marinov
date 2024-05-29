@@ -42,6 +42,8 @@
             obstacleTop2 = new PictureBox();
             startButton = new Button();
             retryButton = new Button();
+            levelLabel = new Label();
+            levelNumber = new Label();
             ((System.ComponentModel.ISupportInitialize)obstacleBottom).BeginInit();
             ((System.ComponentModel.ISupportInitialize)doggie).BeginInit();
             ((System.ComponentModel.ISupportInitialize)grass).BeginInit();
@@ -176,6 +178,31 @@
             retryButton.UseVisualStyleBackColor = false;
             retryButton.Click += retryButton_Click;
             // 
+            // levelLabel
+            // 
+            levelLabel.AutoSize = true;
+            levelLabel.BackColor = Color.Gold;
+            levelLabel.Font = new Font("Little Dinosaur", 26.25F, FontStyle.Regular, GraphicsUnit.Point);
+            levelLabel.Location = new Point(229, 16);
+            levelLabel.Name = "levelLabel";
+            levelLabel.Size = new Size(120, 36);
+            levelLabel.TabIndex = 12;
+            levelLabel.Text = "Level:";
+            levelLabel.TextAlign = ContentAlignment.MiddleCenter;
+            // 
+            // levelNumber
+            // 
+            levelNumber.AutoSize = true;
+            levelNumber.Font = new Font("Little Dinosaur", 24F, FontStyle.Regular, GraphicsUnit.Point);
+            levelNumber.ForeColor = Color.Black;
+            levelNumber.Location = new Point(355, 18);
+            levelNumber.Name = "levelNumber";
+            levelNumber.Size = new Size(28, 33);
+            levelNumber.TabIndex = 13;
+            levelNumber.Tag = "levelNumber";
+            levelNumber.Text = "1";
+            levelNumber.TextAlign = ContentAlignment.MiddleCenter;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -183,6 +210,8 @@
             BackColor = Color.LightSkyBlue;
             BackgroundImageLayout = ImageLayout.Stretch;
             ClientSize = new Size(1140, 555);
+            Controls.Add(levelNumber);
+            Controls.Add(levelLabel);
             Controls.Add(retryButton);
             Controls.Add(startButton);
             Controls.Add(doggie);
@@ -221,5 +250,7 @@
         private PictureBox obstacleTop2;
         private Button startButton;
         private Button retryButton;
+        private Label levelLabel;
+        private Label levelNumber;
     }
 }

@@ -20,6 +20,7 @@ namespace Floppy_Game_by_I_M_Marinov
             gameOverLabel.Visible = false;
             retryButton.Visible = false;
             this.KeyPreview = true;
+            levelNumber.Visible = false;
 
             /* save the initial positions of the doggie and obstacles */
             initialObstacleBottomX = obstacleBottom.Left; 
@@ -32,10 +33,12 @@ namespace Floppy_Game_by_I_M_Marinov
 
         // public variables
         int obstacleSpeed = 3; // movement speed of the obstacles
+        int level = 1;
         int gravity = 3; // movement of doggie 
         int score = 0; // scores ... ofc
         private bool speedIncreasedAlready = false;
         int lastCheckedScore = 0;
+
 
         private void timer_Tick(object sender, EventArgs e)
         {
@@ -47,6 +50,7 @@ namespace Floppy_Game_by_I_M_Marinov
             MoveObstacle(obstacleTop2);
 
             scoreText.Text = score.ToString();
+            levelNumber.Text = level.ToString();
 
             CheckAndResetObstacle(obstacleBottom);
             CheckAndResetObstacle(obstacleTop);
@@ -74,6 +78,7 @@ namespace Floppy_Game_by_I_M_Marinov
             {
                 obstacleSpeed += 1;
                 lastCheckedScore = score;
+                level++;
             }
         }
 
@@ -141,6 +146,7 @@ namespace Floppy_Game_by_I_M_Marinov
         {
             StartGame();
             startButton.Visible = false;
+            levelNumber.Visible = true;
             Focus(); // Ensure the form has focus to capture key events
         }
 
@@ -162,6 +168,7 @@ namespace Floppy_Game_by_I_M_Marinov
             obstacleTop2.Left = initialObstacleTop2X;
             gameOverLabel.Visible = false;
             retryButton.Visible = false; // Hide the retry button before restarting the game
+            levelNumber.Visible = true;
             timer.Start();
         }
     }
