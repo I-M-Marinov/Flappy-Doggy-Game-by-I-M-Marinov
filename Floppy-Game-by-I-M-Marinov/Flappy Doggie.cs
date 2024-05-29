@@ -34,7 +34,8 @@ namespace Floppy_Game_by_I_M_Marinov
         int obstacleSpeed = 3; // movement speed of the obstacles
         int gravity = 3; // movement of doggie 
         int score = 0; // scores ... ofc
-        bool speedIncreasedOnce = false; // flag to ensure speed increases only once
+        private bool speedIncreasedAlready = false;
+        int lastCheckedScore = 0;
 
         private void timer_Tick(object sender, EventArgs e)
         {
@@ -57,10 +58,22 @@ namespace Floppy_Game_by_I_M_Marinov
                 gameOver();
             }
 
-            if (score > 10 && !speedIncreasedOnce)
+            if (score % 20 == 0 && score > 0 && !speedIncreasedAlready)
+            {
+                IncreaseGameSpeed(score);
+            }
+            else if (score % 20 != 0)
+            {
+                speedIncreasedAlready = false;
+            }
+        }
+
+        private void IncreaseGameSpeed(int score)
+        {
+            if (score % 20 == 0 && score > lastCheckedScore)
             {
                 obstacleSpeed += 1;
-                speedIncreasedOnce = true;
+                lastCheckedScore = score;
             }
         }
 
@@ -141,7 +154,6 @@ namespace Floppy_Game_by_I_M_Marinov
             score = 0;
             gravity = 3;
             obstacleSpeed = 3;
-            speedIncreasedOnce = false;
             /* call the doggy and obstacles's initial positions */
             doggie.Top = initialDoggieY;
             obstacleBottom.Left = initialObstacleBottomX;
