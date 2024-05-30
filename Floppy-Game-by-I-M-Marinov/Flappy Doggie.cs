@@ -171,6 +171,7 @@ namespace Floppy_Game_by_I_M_Marinov
             gameOverLabel.Visible = false;
             retryButton.Visible = false; // Hide the retry button before restarting the game
             levelNumber.Visible = true;
+            quitButton.Visible = false;
             timer.Start();
         }
 
