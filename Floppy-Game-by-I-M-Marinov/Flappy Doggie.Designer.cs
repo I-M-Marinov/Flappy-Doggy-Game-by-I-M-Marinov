@@ -44,6 +44,7 @@
             retryButton = new Button();
             levelLabel = new Label();
             levelNumber = new Label();
+            quitButton = new Button();
             ((System.ComponentModel.ISupportInitialize)obstacleBottom).BeginInit();
             ((System.ComponentModel.ISupportInitialize)doggie).BeginInit();
             ((System.ComponentModel.ISupportInitialize)grass).BeginInit();
@@ -203,6 +204,21 @@
             levelNumber.Text = "1";
             levelNumber.TextAlign = ContentAlignment.MiddleCenter;
             // 
+            // quitButton
+            // 
+            quitButton.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            quitButton.BackColor = Color.DarkRed;
+            quitButton.Font = new Font("Little Dinosaur", 15.7499981F, FontStyle.Regular, GraphicsUnit.Point);
+            quitButton.ForeColor = Color.White;
+            quitButton.Location = new Point(503, 320);
+            quitButton.Name = "quitButton";
+            quitButton.Size = new Size(146, 49);
+            quitButton.TabIndex = 14;
+            quitButton.Tag = "retryButton";
+            quitButton.Text = "Quit";
+            quitButton.UseVisualStyleBackColor = false;
+            quitButton.Click += quitButton_Click;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -210,6 +226,7 @@
             BackColor = Color.LightSkyBlue;
             BackgroundImageLayout = ImageLayout.Stretch;
             ClientSize = new Size(1140, 555);
+            Controls.Add(quitButton);
             Controls.Add(levelNumber);
             Controls.Add(levelLabel);
             Controls.Add(retryButton);
@@ -252,5 +269,6 @@
         private Button retryButton;
         private Label levelLabel;
         private Label levelNumber;
+        private Button quitButton;
     }
 }

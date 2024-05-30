@@ -21,9 +21,10 @@ namespace Floppy_Game_by_I_M_Marinov
             retryButton.Visible = false;
             this.KeyPreview = true;
             levelNumber.Visible = false;
+            quitButton.Visible = false;
 
             /* save the initial positions of the doggie and obstacles */
-            initialObstacleBottomX = obstacleBottom.Left; 
+            initialObstacleBottomX = obstacleBottom.Left;
             initialObstacleTopX = obstacleTop.Left;
             initialObstacleBottom2X = obstacleBottom2.Left;
             initialObstacleTop2X = obstacleTop2.Left;
@@ -134,6 +135,7 @@ namespace Floppy_Game_by_I_M_Marinov
             gameOverLabel.Text = "Game Over !";
             gameOverLabel.Visible = true;
             retryButton.Visible = true;
+            quitButton.Visible = true;
         }
 
         private void StartGame()
@@ -170,6 +172,11 @@ namespace Floppy_Game_by_I_M_Marinov
             retryButton.Visible = false; // Hide the retry button before restarting the game
             levelNumber.Visible = true;
             timer.Start();
+        }
+
+        private void quitButton_Click(object sender, EventArgs e)
+        {
+            Environment.Exit(500);
         }
     }
 }
