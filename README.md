@@ -28,7 +28,7 @@
 </p>
 
 <p align="center">
-<img src="./flappy-doggie-game3.PNG">
+<img src="./flappy-doggie-game4.PNG">
 </p>
 
 ## Last Updates: 
