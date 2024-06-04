@@ -34,7 +34,7 @@
 ## Last Updates: 
 
 - Retry Button added, so the user can restart the game without restarting the application
-- Game speed changes every 20 points ( 20 pipes evaded )
+- Game speed increases every 20 points ( 20 pipes evaded )
 - Added a label that helps the player see which is the current level of speed in-game
 
 
