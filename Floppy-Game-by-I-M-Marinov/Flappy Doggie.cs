@@ -27,6 +27,8 @@ namespace Floppy_Game_by_I_M_Marinov
             nameLabel.Visible = false;
             scoresTextBox.Visible = false;
             submitScoresButton.Visible = false;
+            resetAllScoresButton.Visible = false;
+            statusTextLabel.Visible = false;
 
             /* save the initial positions of the doggie and obstacles */
             initialObstacleBottomX = obstacleBottom.Left;
@@ -45,6 +47,7 @@ namespace Floppy_Game_by_I_M_Marinov
         private bool speedIncreasedAlready = false;
         int lastCheckedScore = 0;
         readonly DateTime date = DateTime.Now;
+        static readonly string path = "HighScores.txt";
 
 
         private void timer_Tick(object sender, EventArgs e)
@@ -142,10 +145,7 @@ namespace Floppy_Game_by_I_M_Marinov
             gameOverLabel.Visible = true;
             retryButton.Visible = true;
             quitButton.Visible = true;
-            saveScoresLabel.Visible = true;
-            nameLabel.Visible = true;
-            scoresTextBox.Visible = true;
-            submitScoresButton.Visible = true;
+            HighScoresShowAndHide();
 
         }
 
@@ -195,31 +195,46 @@ namespace Floppy_Game_by_I_M_Marinov
         static void SaveScore(string name, int score, int level, DateTime date)
         {
 
-            string path = "HighScores.txt"; // local path of the txt file where the high scores would be held 
             string formattedScore = $"Name: {name} ----- Score: {score} ----- Level: {level} ----- Saved on: {date}";
 
-            using (StreamWriter writer = new StreamWriter(path, true)) 
+            using (StreamWriter writer = new StreamWriter(path, true))
             {
                 writer.WriteLine(formattedScore);
             }
         }
 
+        private void DeleteScores()
+        {
+            if (File.Exists(path))
+            {
+                File.Delete(path);
+                statusTextLabel.Text = "All scores deleted successfully !";
+            }
+            else
+            {
+                statusTextLabel.Text = "There are no scores saved as of now !";
+            }
+        }
+
         private void submitScoresButton_Click(object sender, EventArgs e)
         {
-            string playerName = scoresTextBox.Text; 
+            string playerName = scoresTextBox.Text;
             SaveScore(playerName, score, level, date);
             scoresTextBox.Text = "";
         }
 
         private void HighScoresShowAndHide()
         {
-            if (saveScoresLabel.Visible == false && nameLabel.Visible == false && 
-                scoresTextBox.Visible == false && submitScoresButton.Visible == false)
+            if (saveScoresLabel.Visible == false && nameLabel.Visible == false &&
+                scoresTextBox.Visible == false && submitScoresButton.Visible == false 
+                && resetAllScoresButton.Visible == false && statusTextLabel.Visible == false)
             {
                 saveScoresLabel.Visible = true;
                 nameLabel.Visible = true;
                 scoresTextBox.Visible = true;
                 submitScoresButton.Visible = true;
+                resetAllScoresButton.Visible = true;
+                statusTextLabel.Visible = true;
             }
             else
             {
@@ -227,7 +242,14 @@ namespace Floppy_Game_by_I_M_Marinov
                 nameLabel.Visible = false;
                 scoresTextBox.Visible = false;
                 submitScoresButton.Visible = false;
+                resetAllScoresButton.Visible = false;
+                statusTextLabel.Visible = false;
             }
+        }
+
+        private void resetAllScores_Click(object sender, EventArgs e)
+        {
+            DeleteScores();
         }
     }
 }

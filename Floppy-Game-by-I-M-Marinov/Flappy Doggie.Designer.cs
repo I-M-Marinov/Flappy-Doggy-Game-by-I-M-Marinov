@@ -49,6 +49,8 @@
             nameLabel = new Label();
             saveScoresLabel = new Label();
             submitScoresButton = new Button();
+            resetAllScoresButton = new Button();
+            statusTextLabel = new Label();
             ((System.ComponentModel.ISupportInitialize)obstacleBottom).BeginInit();
             ((System.ComponentModel.ISupportInitialize)doggie).BeginInit();
             ((System.ComponentModel.ISupportInitialize)grass).BeginInit();
@@ -259,13 +261,36 @@
             // 
             submitScoresButton.BackColor = Color.Lime;
             submitScoresButton.Font = new Font("Little Dinosaur", 12F, FontStyle.Italic, GraphicsUnit.Point);
-            submitScoresButton.Location = new Point(503, 449);
+            submitScoresButton.Location = new Point(407, 449);
             submitScoresButton.Name = "submitScoresButton";
             submitScoresButton.Size = new Size(178, 40);
             submitScoresButton.TabIndex = 18;
             submitScoresButton.Text = "Submit Score";
             submitScoresButton.UseVisualStyleBackColor = false;
             submitScoresButton.Click += submitScoresButton_Click;
+            // 
+            // resetAllScoresButton
+            // 
+            resetAllScoresButton.BackColor = Color.OrangeRed;
+            resetAllScoresButton.Font = new Font("Little Dinosaur", 12F, FontStyle.Italic, GraphicsUnit.Point);
+            resetAllScoresButton.ForeColor = Color.Black;
+            resetAllScoresButton.Location = new Point(591, 449);
+            resetAllScoresButton.Name = "resetAllScoresButton";
+            resetAllScoresButton.Size = new Size(178, 40);
+            resetAllScoresButton.TabIndex = 19;
+            resetAllScoresButton.Text = "Delete All Scores";
+            resetAllScoresButton.UseVisualStyleBackColor = false;
+            resetAllScoresButton.Click += resetAllScores_Click;
+            // 
+            // statusTextLabel
+            // 
+            statusTextLabel.AutoSize = true;
+            statusTextLabel.Font = new Font("Little Dinosaur", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            statusTextLabel.Location = new Point(462, 515);
+            statusTextLabel.Name = "statusTextLabel";
+            statusTextLabel.Size = new Size(57, 17);
+            statusTextLabel.TabIndex = 20;
+            statusTextLabel.Text = "label1";
             // 
             // Form1
             // 
@@ -274,6 +299,8 @@
             BackColor = Color.LightSkyBlue;
             BackgroundImageLayout = ImageLayout.Stretch;
             ClientSize = new Size(1140, 555);
+            Controls.Add(statusTextLabel);
+            Controls.Add(resetAllScoresButton);
             Controls.Add(submitScoresButton);
             Controls.Add(saveScoresLabel);
             Controls.Add(nameLabel);
@@ -326,5 +353,7 @@
         private Label saveScoresLabel;
         private Button submitScoresButton;
         public TextBox scoresTextBox;
+        private Button resetAllScoresButton;
+        private Label statusTextLabel;
     }
 }
