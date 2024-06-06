@@ -200,6 +200,7 @@
             // levelNumber
             // 
             levelNumber.AutoSize = true;
+            levelNumber.BackColor = Color.Transparent;
             levelNumber.Font = new Font("Little Dinosaur", 24F, FontStyle.Regular, GraphicsUnit.Point);
             levelNumber.ForeColor = Color.Black;
             levelNumber.Location = new Point(355, 18);
@@ -286,7 +287,7 @@
             // 
             statusTextLabel.AutoSize = true;
             statusTextLabel.Font = new Font("Little Dinosaur", 12F, FontStyle.Regular, GraphicsUnit.Point);
-            statusTextLabel.Location = new Point(462, 515);
+            statusTextLabel.Location = new Point(369, 514);
             statusTextLabel.Name = "statusTextLabel";
             statusTextLabel.Size = new Size(57, 17);
             statusTextLabel.TabIndex = 20;

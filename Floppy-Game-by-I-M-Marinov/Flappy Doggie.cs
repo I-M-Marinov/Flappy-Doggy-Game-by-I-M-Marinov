@@ -29,6 +29,7 @@ namespace Floppy_Game_by_I_M_Marinov
             submitScoresButton.Visible = false;
             resetAllScoresButton.Visible = false;
             statusTextLabel.Visible = false;
+            statusTextLabel.Text = "";
 
             /* save the initial positions of the doggie and obstacles */
             initialObstacleBottomX = obstacleBottom.Left;
@@ -184,6 +185,7 @@ namespace Floppy_Game_by_I_M_Marinov
             levelNumber.Visible = true;
             quitButton.Visible = false;
             HighScoresShowAndHide();
+            statusTextLabel.Text = "";
             timer.Start();
         }
 
@@ -192,9 +194,8 @@ namespace Floppy_Game_by_I_M_Marinov
             Environment.Exit(500);
         }
 
-        static void SaveScore(string name, int score, int level, DateTime date)
+        private void SaveScore(string name, int score, int level, DateTime date)
         {
-
             string formattedScore = $"Name: {name} ----- Score: {score} ----- Level: {level} ----- Saved on: {date}";
 
             using (StreamWriter writer = new StreamWriter(path, true))
@@ -219,15 +220,23 @@ namespace Floppy_Game_by_I_M_Marinov
         private void submitScoresButton_Click(object sender, EventArgs e)
         {
             string playerName = scoresTextBox.Text;
-            SaveScore(playerName, score, level, date);
-            scoresTextBox.Text = "";
+            if (playerName == "")
+            {
+                statusTextLabel.Text = "You need to write a name in to save your score! ";
+            }
+            else
+            {
+                SaveScore(playerName, score, level, date);
+                scoresTextBox.Text = "";
+                statusTextLabel.Text = $"{playerName} your scores has been saved successfully !";
+            }
         }
 
         private void HighScoresShowAndHide()
         {
-            if (saveScoresLabel.Visible == false && nameLabel.Visible == false &&
-                scoresTextBox.Visible == false && submitScoresButton.Visible == false 
-                && resetAllScoresButton.Visible == false && statusTextLabel.Visible == false)
+            if (!saveScoresLabel.Visible && !nameLabel.Visible  &&
+                !scoresTextBox.Visible && !submitScoresButton.Visible && 
+                !resetAllScoresButton.Visible && !statusTextLabel.Visible )
             {
                 saveScoresLabel.Visible = true;
                 nameLabel.Visible = true;
