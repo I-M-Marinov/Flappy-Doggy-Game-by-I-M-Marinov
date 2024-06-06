@@ -36,11 +36,20 @@
 - Retry Button added, so the user can restart the game without restarting the application
 - Game speed increases every 20 points ( 20 pipes evaded )
 - Added a label that helps the player see which is the current level of speed in-game
+- Added High Scores that output on a txt file ( currently in the game folder ).
+
+<p align="center">
+<img src="./high-scores1.PNG">
+</p>
+
+<p align="center">
+<img src="./high-scores2.PNG">
+</p>
 
 
 ## Planned updates:
 
-- High Scores
+
 - Pause button
 - Backgorund music and sounds when the doggy is moving up or down 
 
