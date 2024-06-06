@@ -45,6 +45,10 @@
             levelLabel = new Label();
             levelNumber = new Label();
             quitButton = new Button();
+            scoresTextBox = new TextBox();
+            nameLabel = new Label();
+            saveScoresLabel = new Label();
+            submitScoresButton = new Button();
             ((System.ComponentModel.ISupportInitialize)obstacleBottom).BeginInit();
             ((System.ComponentModel.ISupportInitialize)doggie).BeginInit();
             ((System.ComponentModel.ISupportInitialize)grass).BeginInit();
@@ -219,6 +223,50 @@
             quitButton.UseVisualStyleBackColor = false;
             quitButton.Click += quitButton_Click;
             // 
+            // scoresTextBox
+            // 
+            scoresTextBox.BackColor = Color.SeaShell;
+            scoresTextBox.Location = new Point(471, 420);
+            scoresTextBox.Name = "scoresTextBox";
+            scoresTextBox.Size = new Size(239, 23);
+            scoresTextBox.TabIndex = 15;
+            scoresTextBox.TextAlign = HorizontalAlignment.Center;
+            // 
+            // nameLabel
+            // 
+            nameLabel.AutoSize = true;
+            nameLabel.BackColor = Color.Tomato;
+            nameLabel.Font = new Font("Little Dinosaur", 15.7499981F, FontStyle.Regular, GraphicsUnit.Point);
+            nameLabel.Location = new Point(395, 421);
+            nameLabel.Name = "nameLabel";
+            nameLabel.Size = new Size(70, 22);
+            nameLabel.TabIndex = 16;
+            nameLabel.Text = "Name:";
+            nameLabel.TextAlign = ContentAlignment.MiddleCenter;
+            // 
+            // saveScoresLabel
+            // 
+            saveScoresLabel.AutoSize = true;
+            saveScoresLabel.BackColor = Color.DarkGray;
+            saveScoresLabel.Font = new Font("Little Dinosaur", 15.7499981F, FontStyle.Italic, GraphicsUnit.Point);
+            saveScoresLabel.Location = new Point(488, 383);
+            saveScoresLabel.Name = "saveScoresLabel";
+            saveScoresLabel.Size = new Size(207, 22);
+            saveScoresLabel.TabIndex = 17;
+            saveScoresLabel.Text = "Save your scores";
+            // 
+            // submitScoresButton
+            // 
+            submitScoresButton.BackColor = Color.Lime;
+            submitScoresButton.Font = new Font("Little Dinosaur", 12F, FontStyle.Italic, GraphicsUnit.Point);
+            submitScoresButton.Location = new Point(503, 449);
+            submitScoresButton.Name = "submitScoresButton";
+            submitScoresButton.Size = new Size(178, 40);
+            submitScoresButton.TabIndex = 18;
+            submitScoresButton.Text = "Submit Score";
+            submitScoresButton.UseVisualStyleBackColor = false;
+            submitScoresButton.Click += submitScoresButton_Click;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -226,6 +274,10 @@
             BackColor = Color.LightSkyBlue;
             BackgroundImageLayout = ImageLayout.Stretch;
             ClientSize = new Size(1140, 555);
+            Controls.Add(submitScoresButton);
+            Controls.Add(saveScoresLabel);
+            Controls.Add(nameLabel);
+            Controls.Add(scoresTextBox);
             Controls.Add(quitButton);
             Controls.Add(levelNumber);
             Controls.Add(levelLabel);
@@ -270,5 +322,9 @@
         private Label levelLabel;
         private Label levelNumber;
         private Button quitButton;
+        private Label nameLabel;
+        private Label saveScoresLabel;
+        private Button submitScoresButton;
+        public TextBox scoresTextBox;
     }
 }

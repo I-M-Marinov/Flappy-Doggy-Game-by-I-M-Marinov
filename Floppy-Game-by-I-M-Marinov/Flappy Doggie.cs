@@ -1,3 +1,4 @@
+using System.Xml.Linq;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.Button;
 
 namespace Floppy_Game_by_I_M_Marinov
@@ -17,11 +18,15 @@ namespace Floppy_Game_by_I_M_Marinov
             InitializeComponent();
             this.FormBorderStyle = FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
+            this.KeyPreview = true;
             gameOverLabel.Visible = false;
             retryButton.Visible = false;
-            this.KeyPreview = true;
             levelNumber.Visible = false;
             quitButton.Visible = false;
+            saveScoresLabel.Visible = false;
+            nameLabel.Visible = false;
+            scoresTextBox.Visible = false;
+            submitScoresButton.Visible = false;
 
             /* save the initial positions of the doggie and obstacles */
             initialObstacleBottomX = obstacleBottom.Left;
@@ -39,6 +44,7 @@ namespace Floppy_Game_by_I_M_Marinov
         int score = 0; // scores ... ofc
         private bool speedIncreasedAlready = false;
         int lastCheckedScore = 0;
+        readonly DateTime date = DateTime.Now;
 
 
         private void timer_Tick(object sender, EventArgs e)
@@ -136,6 +142,11 @@ namespace Floppy_Game_by_I_M_Marinov
             gameOverLabel.Visible = true;
             retryButton.Visible = true;
             quitButton.Visible = true;
+            saveScoresLabel.Visible = true;
+            nameLabel.Visible = true;
+            scoresTextBox.Visible = true;
+            submitScoresButton.Visible = true;
+
         }
 
         private void StartGame()
@@ -172,12 +183,51 @@ namespace Floppy_Game_by_I_M_Marinov
             retryButton.Visible = false; // Hide the retry button before restarting the game
             levelNumber.Visible = true;
             quitButton.Visible = false;
+            HighScoresShowAndHide();
             timer.Start();
         }
 
         private void quitButton_Click(object sender, EventArgs e)
         {
             Environment.Exit(500);
+        }
+
+        static void SaveScore(string name, int score, int level, DateTime date)
+        {
+
+            string path = "HighScores.txt"; // local path of the txt file where the high scores would be held 
+            string formattedScore = $"Name: {name} ----- Score: {score} ----- Level: {level} ----- Saved on: {date}";
+
+            using (StreamWriter writer = new StreamWriter(path, true)) 
+            {
+                writer.WriteLine(formattedScore);
+            }
+        }
+
+        private void submitScoresButton_Click(object sender, EventArgs e)
+        {
+            string playerName = scoresTextBox.Text; 
+            SaveScore(playerName, score, level, date);
+            scoresTextBox.Text = "";
+        }
+
+        private void HighScoresShowAndHide()
+        {
+            if (saveScoresLabel.Visible == false && nameLabel.Visible == false && 
+                scoresTextBox.Visible == false && submitScoresButton.Visible == false)
+            {
+                saveScoresLabel.Visible = true;
+                nameLabel.Visible = true;
+                scoresTextBox.Visible = true;
+                submitScoresButton.Visible = true;
+            }
+            else
+            {
+                saveScoresLabel.Visible = false;
+                nameLabel.Visible = false;
+                scoresTextBox.Visible = false;
+                submitScoresButton.Visible = false;
+            }
         }
     }
 }
