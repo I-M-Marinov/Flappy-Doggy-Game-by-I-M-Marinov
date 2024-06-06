@@ -39,11 +39,11 @@
 - Added High Scores that output on a txt file ( currently in the game folder ).
 
 <p align="center">
-<img src="./high-scores1.PNG">
+<img src="./high-scores1.png">
 </p>
 
 <p align="center">
-<img src="./high-scores2.PNG">
+<img src="./high-scores2.png">
 </p>
 
 
