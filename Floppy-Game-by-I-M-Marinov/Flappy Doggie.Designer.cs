@@ -137,12 +137,13 @@
             // gameOverLabel
             // 
             gameOverLabel.AutoSize = true;
-            gameOverLabel.BackColor = Color.Crimson;
+            gameOverLabel.BackColor = Color.SkyBlue;
             gameOverLabel.FlatStyle = FlatStyle.System;
-            gameOverLabel.Font = new Font("Little Dinosaur", 48F, FontStyle.Regular, GraphicsUnit.Point);
-            gameOverLabel.Location = new Point(369, 196);
+            gameOverLabel.Font = new Font("Little Dinosaur", 60F, FontStyle.Regular, GraphicsUnit.Point);
+            gameOverLabel.ForeColor = Color.Firebrick;
+            gameOverLabel.Location = new Point(300, 121);
             gameOverLabel.Name = "gameOverLabel";
-            gameOverLabel.Size = new Size(527, 66);
+            gameOverLabel.Size = new Size(662, 83);
             gameOverLabel.TabIndex = 8;
             gameOverLabel.Text = "gameOverLabel";
             gameOverLabel.TextAlign = ContentAlignment.MiddleCenter;
@@ -176,7 +177,7 @@
             retryButton.BackColor = Color.Gold;
             retryButton.Font = new Font("Little Dinosaur", 15.7499981F, FontStyle.Regular, GraphicsUnit.Point);
             retryButton.ForeColor = Color.Black;
-            retryButton.Location = new Point(503, 265);
+            retryButton.Location = new Point(402, 216);
             retryButton.Name = "retryButton";
             retryButton.Size = new Size(146, 49);
             retryButton.TabIndex = 11;
@@ -214,10 +215,10 @@
             // quitButton
             // 
             quitButton.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            quitButton.BackColor = Color.DarkRed;
+            quitButton.BackColor = Color.OrangeRed;
             quitButton.Font = new Font("Little Dinosaur", 15.7499981F, FontStyle.Regular, GraphicsUnit.Point);
-            quitButton.ForeColor = Color.White;
-            quitButton.Location = new Point(503, 320);
+            quitButton.ForeColor = Color.Black;
+            quitButton.Location = new Point(586, 216);
             quitButton.Name = "quitButton";
             quitButton.Size = new Size(146, 49);
             quitButton.TabIndex = 14;
@@ -229,7 +230,7 @@
             // scoresTextBox
             // 
             scoresTextBox.BackColor = Color.SeaShell;
-            scoresTextBox.Location = new Point(471, 420);
+            scoresTextBox.Location = new Point(456, 328);
             scoresTextBox.Name = "scoresTextBox";
             scoresTextBox.Size = new Size(239, 23);
             scoresTextBox.TabIndex = 15;
@@ -238,9 +239,9 @@
             // nameLabel
             // 
             nameLabel.AutoSize = true;
-            nameLabel.BackColor = Color.Tomato;
+            nameLabel.BackColor = Color.PaleGreen;
             nameLabel.Font = new Font("Little Dinosaur", 15.7499981F, FontStyle.Regular, GraphicsUnit.Point);
-            nameLabel.Location = new Point(395, 421);
+            nameLabel.Location = new Point(380, 329);
             nameLabel.Name = "nameLabel";
             nameLabel.Size = new Size(70, 22);
             nameLabel.TabIndex = 16;
@@ -250,9 +251,9 @@
             // saveScoresLabel
             // 
             saveScoresLabel.AutoSize = true;
-            saveScoresLabel.BackColor = Color.DarkGray;
+            saveScoresLabel.BackColor = Color.PaleGreen;
             saveScoresLabel.Font = new Font("Little Dinosaur", 15.7499981F, FontStyle.Italic, GraphicsUnit.Point);
-            saveScoresLabel.Location = new Point(488, 383);
+            saveScoresLabel.Location = new Point(466, 290);
             saveScoresLabel.Name = "saveScoresLabel";
             saveScoresLabel.Size = new Size(207, 22);
             saveScoresLabel.TabIndex = 17;
@@ -262,7 +263,7 @@
             // 
             submitScoresButton.BackColor = Color.Lime;
             submitScoresButton.Font = new Font("Little Dinosaur", 12F, FontStyle.Italic, GraphicsUnit.Point);
-            submitScoresButton.Location = new Point(407, 449);
+            submitScoresButton.Location = new Point(478, 366);
             submitScoresButton.Name = "submitScoresButton";
             submitScoresButton.Size = new Size(178, 40);
             submitScoresButton.TabIndex = 18;
@@ -275,7 +276,7 @@
             resetAllScoresButton.BackColor = Color.OrangeRed;
             resetAllScoresButton.Font = new Font("Little Dinosaur", 12F, FontStyle.Italic, GraphicsUnit.Point);
             resetAllScoresButton.ForeColor = Color.Black;
-            resetAllScoresButton.Location = new Point(591, 449);
+            resetAllScoresButton.Location = new Point(478, 412);
             resetAllScoresButton.Name = "resetAllScoresButton";
             resetAllScoresButton.Size = new Size(178, 40);
             resetAllScoresButton.TabIndex = 19;
@@ -286,12 +287,16 @@
             // statusTextLabel
             // 
             statusTextLabel.AutoSize = true;
-            statusTextLabel.Font = new Font("Little Dinosaur", 12F, FontStyle.Regular, GraphicsUnit.Point);
-            statusTextLabel.Location = new Point(369, 514);
+            statusTextLabel.BackColor = Color.SkyBlue;
+            statusTextLabel.Font = new Font("Little Dinosaur", 12F, FontStyle.Italic, GraphicsUnit.Point);
+            statusTextLabel.ForeColor = Color.OrangeRed;
+            statusTextLabel.Location = new Point(380, 462);
+            statusTextLabel.MaximumSize = new Size(800, 0);
             statusTextLabel.Name = "statusTextLabel";
             statusTextLabel.Size = new Size(57, 17);
             statusTextLabel.TabIndex = 20;
             statusTextLabel.Text = "label1";
+            statusTextLabel.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // Form1
             // 

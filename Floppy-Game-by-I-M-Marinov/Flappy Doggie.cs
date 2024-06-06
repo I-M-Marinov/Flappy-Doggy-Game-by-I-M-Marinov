@@ -146,6 +146,7 @@ namespace Floppy_Game_by_I_M_Marinov
             gameOverLabel.Visible = true;
             retryButton.Visible = true;
             quitButton.Visible = true;
+            HideAllObstacles();
             HighScoresShowAndHide();
 
         }
@@ -175,6 +176,7 @@ namespace Floppy_Game_by_I_M_Marinov
             gravity = 3;
             obstacleSpeed = 3;
             /* call the doggy and obstacles's initial positions */
+            ShowAllObstacles();
             doggie.Top = initialDoggieY;
             obstacleBottom.Left = initialObstacleBottomX;
             obstacleTop.Left = initialObstacleTopX;
@@ -228,7 +230,7 @@ namespace Floppy_Game_by_I_M_Marinov
             {
                 SaveScore(playerName, score, level, date);
                 scoresTextBox.Text = "";
-                statusTextLabel.Text = $"{playerName} your scores has been saved successfully !";
+                statusTextLabel.Text = $"{playerName} your score has been saved successfully !";
             }
         }
 
@@ -259,6 +261,22 @@ namespace Floppy_Game_by_I_M_Marinov
         private void resetAllScores_Click(object sender, EventArgs e)
         {
             DeleteScores();
+        }
+
+        private void HideAllObstacles()
+        {
+            obstacleBottom.Visible = false;
+            obstacleTop.Visible = false;
+            obstacleBottom2.Visible = false;
+            obstacleTop2.Visible = false;
+        }
+
+        private void ShowAllObstacles()
+        {
+            obstacleBottom.Visible = true;
+            obstacleTop.Visible = true;
+            obstacleBottom2.Visible = true;
+            obstacleTop2.Visible = true;
         }
     }
 }
