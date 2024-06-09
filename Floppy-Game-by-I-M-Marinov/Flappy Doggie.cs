@@ -260,7 +260,7 @@ namespace Floppy_Game_by_I_M_Marinov
                 usernameList.Add(playerName); // add the new score to the list
                 SaveScore(playerName, score, level, date); // add the new score to the TXT file 
                 scoresTextBox.Text = "";
-                statusTextLabel.Text = $"{playerName}'s has a new high score --> {highestScore}.";
+                statusTextLabel.Text = $"{playerName}'s has a new high score --> {score}.";
                 
             }
             else if (score < highestScore)
