@@ -19,6 +19,7 @@ namespace Floppy_Game_by_I_M_Marinov
             this.FormBorderStyle = FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
             this.KeyPreview = true;
+            LoadNamesFromFile(); 
             gameOverLabel.Visible = false;
             retryButton.Visible = false;
             levelNumber.Visible = false;
@@ -48,8 +49,29 @@ namespace Floppy_Game_by_I_M_Marinov
         private bool speedIncreasedAlready = false;
         int lastCheckedScore = 0;
         readonly DateTime date = DateTime.Now;
+        private List<string> usernameList = new();
         static readonly string path = "HighScores.txt";
 
+
+
+        private void LoadNamesFromFile()
+        {
+            if (File.Exists(path))
+            {
+                using (StreamReader reader = new StreamReader(path))
+                {
+                    string line;
+                    while ((line = reader.ReadLine()) != null)
+                    {
+                        string name = ExtractNameFromLine(line);
+                        if (!string.IsNullOrEmpty(name) && !usernameList.Contains(name))
+                        {
+                            usernameList.Add(name);
+                        }
+                    }
+                }
+            }
+        }
 
         private void timer_Tick(object sender, EventArgs e)
         {
@@ -210,7 +232,9 @@ namespace Floppy_Game_by_I_M_Marinov
         {
             if (File.Exists(path))
             {
-                File.Delete(path);
+
+                File.WriteAllText(path, string.Empty);
+                
                 statusTextLabel.Text = "All scores deleted successfully !";
             }
             else
@@ -221,16 +245,34 @@ namespace Floppy_Game_by_I_M_Marinov
 
         private void submitScoresButton_Click(object sender, EventArgs e)
         {
+
             string playerName = scoresTextBox.Text;
+            int highestScore = GetHighestScoreForUser(playerName);
             if (playerName == "")
             {
                 statusTextLabel.Text = "You need to write a name in to save your score! ";
+            }
+/* if the list of usernames contains the username and the current score is bigger than the highest score recorded in the TXT file and if the highest score in the file is not 0 */
+            else if (usernameList.Contains(playerName) && score > highestScore && highestScore != 0) 
+            {
+                usernameList.Remove(playerName); // remove the last score saved for that username from the private LIST
+                RemoveScoreFromFile(playerName); // remove the score from the TXT file
+                usernameList.Add(playerName); // add the new score to the list
+                SaveScore(playerName, score, level, date); // add the new score to the TXT file 
+                scoresTextBox.Text = "";
+                statusTextLabel.Text = $"{playerName}'s has a new high score --> {highestScore}.";
+                
+            }
+            else if (score < highestScore)
+            {
+                statusTextLabel.Text = $"{playerName}'s highest score is {highestScore}. Try again !";
             }
             else
             {
                 SaveScore(playerName, score, level, date);
                 scoresTextBox.Text = "";
                 statusTextLabel.Text = $"{playerName} your score has been saved successfully !";
+                usernameList.Add(playerName);
             }
         }
 
@@ -277,6 +319,73 @@ namespace Floppy_Game_by_I_M_Marinov
             obstacleTop.Visible = true;
             obstacleBottom2.Visible = true;
             obstacleTop2.Visible = true;
+        }
+
+        private void RemoveScoreFromFile(string name)
+        {
+            string tempFile = Path.GetTempFileName();
+            using (var reader = new StreamReader(path))
+            using (var writer = new StreamWriter(tempFile))
+            {
+                string line;
+                while ((line = reader.ReadLine()) != null)
+                {
+                    if (!line.Contains($"Name: {name} ----- "))
+                    {
+                        writer.WriteLine(line);
+                    }
+                }
+            }
+            File.Delete(path);
+            File.Move(tempFile, path);
+        }
+
+        private string ExtractNameFromLine(string line)
+        {
+        string namePrefix = "Name: ";
+        string nameSuffix = " ----- Score: ";
+
+        int nameStartIndex = line.IndexOf(namePrefix) + namePrefix.Length;
+        int nameEndIndex = line.IndexOf(nameSuffix);
+
+        if (nameStartIndex >= 0 && nameEndIndex > nameStartIndex)
+        {
+            return line.Substring(nameStartIndex, nameEndIndex - nameStartIndex);
+        }
+
+        return null;
+        }
+
+        private int GetHighestScoreForUser(string name)
+        {
+
+            int highestScore = 0;
+
+            using (StreamReader reader = new StreamReader(path))
+            {
+                string line;
+                while ((line = reader.ReadLine()) != null)
+                {
+                    if (line.Contains($"Name: {name} ----- Score: "))
+                    {
+                        string[] tokens = line.Split(new string[] { "-----" }, 0);
+                        foreach (string part in tokens)
+                        {
+                            if (part.Trim().StartsWith("Score:"))
+                            {
+                                int score = int.Parse(part.Trim().Substring(7));
+
+                                if (score > highestScore)
+                                {
+                                    highestScore = score;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            return highestScore;
         }
     }
 }
