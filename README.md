@@ -37,7 +37,15 @@
 - Game speed increases every 20 points ( 20 pipes evaded )
 - Added a label that helps the player see which is the current level of speed in-game
 - The pipes disappear when the game is over, so the player has a more clear view of the butoons and the high score input field.
-- Added High Scores that output on a txt file ( currently in the game folder ). If a user tries to add a high score without wiriting a name in, it does not let him. If a user's name is already present in the High Scores txt file and the high score is bigger than the user's current score it does not let him override it. If the user beats his high score it deletes the last score and puts the new high score in. 
+- Added High Scores that output on a txt file ( currently in the game folder ). If a user tries to add a high score without wiriting a name in, it does not let him. If a user's name is already present in the High Scores txt file and the high score is bigger than the user's current score it does not let him override it. If the user beats his high score it deletes the last score and puts the new high score in.
+- Background music added. Music by: PreetySleepy Art ----> https://pixabay.com/users/prettysleepy-2973588/
+
+## Gameplay video: 
+
+[![Check the gameplay video!](https://img.youtube.com/vi/4oS1wBhYxdI/0.jpg)](https://www.youtube.com/watch?v=4oS1wBhYxdI)
+
+
+## High-Scores:
 
 <p align="center">
 <img src="./high-scores1.png">
@@ -48,11 +56,10 @@
 </p>
 
 
-## Planned updates:
-
+## More planned updates:
 
 - Pause button
-- Background music and sounds when the doggy is moving up or down 
+- Sounds when the doggy is moving up or down 
 
   
 
