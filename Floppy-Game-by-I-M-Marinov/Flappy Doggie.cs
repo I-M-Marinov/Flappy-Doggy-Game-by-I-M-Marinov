@@ -1,3 +1,4 @@
+using System.Media;
 using System.Xml.Linq;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.Button;
 
@@ -38,6 +39,7 @@ namespace Floppy_Game_by_I_M_Marinov
             initialObstacleBottom2X = obstacleBottom2.Left;
             initialObstacleTop2X = obstacleTop2.Left;
             initialDoggieY = doggie.Top;
+            InitializeBackgroundMusic();
 
         }
 
@@ -51,7 +53,7 @@ namespace Floppy_Game_by_I_M_Marinov
         readonly DateTime date = DateTime.Now;
         private List<string> usernameList = new();
         static readonly string path = "HighScores.txt";
-
+        private SoundPlayer _soundPlayer;
 
 
         private void LoadNamesFromFile()
@@ -71,6 +73,14 @@ namespace Floppy_Game_by_I_M_Marinov
                     }
                 }
             }
+        }
+
+        private void InitializeBackgroundMusic()
+        {
+            // Ensure the file path is correct
+            var path = Application.StartupPath + @"\backgroundMusic.wav";
+            _soundPlayer = new SoundPlayer(path);
+            _soundPlayer.PlayLooping();
         }
 
         private void timer_Tick(object sender, EventArgs e)
