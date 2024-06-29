@@ -49,7 +49,7 @@
 
 ## Gameplay video: 
 
-[![Check the gameplay video!](https://img.youtube.com/vi/4oS1wBhYxdI/0.jpg)](https://www.youtube.com/watch?v=4oS1wBhYxdI)
+[![Check the gameplay video!](https://img.youtube.com/vi/fjd_cWuVttM/0.jpg)](https://www.youtube.com/watch?v=fjd_cWuVttM)
 
 
 ## High-Scores:
