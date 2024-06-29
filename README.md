@@ -10,6 +10,7 @@
 - Photoshop CS6 ( some of the images ) + unsplash.com
 - Figma
 - Little Dinosour Font ( https://www.1001fonts.com/little-dinosaur-font.html )
+- Music by: PreetySleepy Art ----> https://pixabay.com/users/prettysleepy-2973588/
   
 
 ## Features
@@ -38,7 +39,7 @@
 - Added a label that helps the player see which is the current level of speed in-game
 - The pipes disappear when the game is over, so the player has a more clear view of the butoons and the high score input field.
 - Added High Scores that output on a txt file ( currently in the game folder ). If a user tries to add a high score without wiriting a name in, it does not let him. If a user's name is already present in the High Scores txt file and the high score is bigger than the user's current score it does not let him override it. If the user beats his high score it deletes the last score and puts the new high score in.
-- Background music added. Music by: PreetySleepy Art ----> https://pixabay.com/users/prettysleepy-2973588/
+- Background music added. 
 
 ## Gameplay video: 
 
