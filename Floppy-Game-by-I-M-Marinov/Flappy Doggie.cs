@@ -1,4 +1,5 @@
 using System.Media;
+using NAudio.Wave;
 using System.Xml.Linq;
 using static System.Formats.Asn1.AsnWriter;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.Button;
@@ -54,7 +55,8 @@ namespace Floppy_Game_by_I_M_Marinov
         readonly DateTime date = DateTime.Now;
         private List<string> usernameList = new();
         static readonly string path = "HighScores.txt";
-        private SoundPlayer _soundPlayer;
+        private WaveOutEvent _backgroundMusicPlayer;
+        private SoundPlayer _effectsSoundPlayer;
 
 
         private void LoadNamesFromFile()
@@ -78,11 +80,37 @@ namespace Floppy_Game_by_I_M_Marinov
 
         private void InitializeBackgroundMusic()
         {
-            // Ensure the file path is correct
-            var path = Application.StartupPath + @"\backgroundMusic.wav";
-            _soundPlayer = new SoundPlayer(path);
-            _soundPlayer.PlayLooping();
+            string path = Application.StartupPath + @"\backgroundMusic.wav";
+            if (File.Exists(path))
+            {
+                _backgroundMusicPlayer = new WaveOutEvent();
+                var audioFileReader = new AudioFileReader(path);
+                _backgroundMusicPlayer.Init(audioFileReader);
+                _backgroundMusicPlayer.Play();
+                _backgroundMusicPlayer.PlaybackStopped += (s, e) => audioFileReader.Position = 0; // Loop the music
+            }
         }
+
+        private void PlayUpAndDownSounds()
+        {
+            var path = Application.StartupPath + @"\upAndDown.wav";
+            if (File.Exists(path))
+            {
+                _effectsSoundPlayer = new SoundPlayer(path);
+                _effectsSoundPlayer.Play();
+            }
+        }
+
+        private void HitAnObstacleSound()
+        {
+            var path = Application.StartupPath + @"\hitObstacle.wav";
+            if (File.Exists(path))
+            {
+                _effectsSoundPlayer = new SoundPlayer(path);
+                _effectsSoundPlayer.Play();
+            }
+        }
+
 
         private void timer_Tick(object sender, EventArgs e)
         {
@@ -103,6 +131,7 @@ namespace Floppy_Game_by_I_M_Marinov
 
             if (CheckCollision())
             {
+                HitAnObstacleSound();
                 gameOver();
             }
 
@@ -160,6 +189,7 @@ namespace Floppy_Game_by_I_M_Marinov
         {
             if (e.KeyCode == Keys.Down)
             {
+                PlayUpAndDownSounds();
                 gravity = 3;
             }
         }
@@ -168,6 +198,7 @@ namespace Floppy_Game_by_I_M_Marinov
         {
             if (e.KeyCode == Keys.Up)
             {
+                PlayUpAndDownSounds();
                 gravity = -3;
             }
         }
