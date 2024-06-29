@@ -7,10 +7,13 @@
 ## Technology stack:
 - C#
 - .NET Core
+- NAudio nuget for .NET ---> https://github.com/naudio/NAudio?tab=readme-ov-file
 - Photoshop CS6 ( some of the images ) + unsplash.com
 - Figma
 - Little Dinosour Font ( https://www.1001fonts.com/little-dinosaur-font.html )
-- Music by: PreetySleepy Art ----> https://pixabay.com/users/prettysleepy-2973588/
+- Background Music by: PreetySleepy Art ----> https://pixabay.com/users/prettysleepy-2973588/
+- Effects Music by: Pixabay ---> https://pixabay.com/users/pixabay-1/
+
   
 
 ## Features
@@ -40,7 +43,9 @@
 - The pipes disappear when the game is over, so the player has a more clear view of the butoons and the high score input field.
 - Added High Scores that output on a txt file ( currently in the game folder ). If a user tries to add a high score without wiriting a name in, it does not let him. If a user's name is already present in the High Scores txt file and the high score is bigger than the user's current score it does not let him override it. If the user beats his high score it deletes the last score and puts the new high score in.
 - If the user wants to delete all scores, it will pop a window asking if he is sure. Vice versa if the user wants to quit the game it will ask him for confirmation. 
-- Background music added. 
+- Background music added. (NAudio nuget)
+- Sounds when the doggy is moving up or down added.
+- Sound when the doggy hits an obstacle added.
 
 ## Gameplay video: 
 
@@ -61,7 +66,7 @@
 ## More planned updates:
 
 - Pause button
-- Sounds when the doggy is moving up or down 
+- Sounds when the level changes ( idea is to have Joey(my corgi) contribute. Maybe record him barking and add it as the sound ). 
 
   
 
