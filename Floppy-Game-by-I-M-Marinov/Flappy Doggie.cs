@@ -1,5 +1,6 @@
 using System.Media;
 using System.Xml.Linq;
+using static System.Formats.Asn1.AsnWriter;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.Button;
 
 namespace Floppy_Game_by_I_M_Marinov
@@ -225,7 +226,13 @@ namespace Floppy_Game_by_I_M_Marinov
 
         private void quitButton_Click(object sender, EventArgs e)
         {
-            Environment.Exit(500);
+
+            DialogResult result = MessageBox.Show($"Are you sure you want to quit ?", "Are you leaving ?", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+
+            if (result == DialogResult.Yes)
+            {
+                Environment.Exit(500);
+            }
         }
 
         private void SaveScore(string name, int score, int level, DateTime date)
@@ -242,7 +249,6 @@ namespace Floppy_Game_by_I_M_Marinov
         {
             if (File.Exists(path))
             {
-
                 File.WriteAllText(path, string.Empty);
                 
                 statusTextLabel.Text = "All scores deleted successfully !";
@@ -262,7 +268,7 @@ namespace Floppy_Game_by_I_M_Marinov
             {
                 statusTextLabel.Text = "You need to write a name in to save your score! ";
             }
-/* if the list of usernames contains the username and the current score is bigger than the highest score recorded in the TXT file and if the highest score in the file is not 0 */
+        /* if the list of usernames contains the username and the current score is bigger than the highest score recorded in the TXT file and if the highest score in the file is not 0 */
             else if (usernameList.Contains(playerName) && score > highestScore && highestScore != 0) 
             {
                 usernameList.Remove(playerName); // remove the last score saved for that username from the private LIST
@@ -312,7 +318,12 @@ namespace Floppy_Game_by_I_M_Marinov
 
         private void resetAllScores_Click(object sender, EventArgs e)
         {
-            DeleteScores();
+            DialogResult result = MessageBox.Show($"Are you sure you want to delete all saved scores ?", "Confirm Deletion", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+
+            if (result == DialogResult.Yes)
+            {
+                DeleteScores();
+            }
         }
 
         private void HideAllObstacles()
