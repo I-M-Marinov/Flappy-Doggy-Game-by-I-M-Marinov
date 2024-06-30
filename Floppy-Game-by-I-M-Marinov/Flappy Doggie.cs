@@ -20,10 +20,12 @@ namespace Floppy_Game_by_I_M_Marinov
         public Form1()
         {
             InitializeComponent();
+            _scoreManipulation = new ScoreManipulation(this);
+            _soundEffects = new Sounds();
+            _scoreManipulation.LoadNamesFromFile();
             this.FormBorderStyle = FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
             this.KeyPreview = true;
-            ScoreManipulation.LoadNamesFromFile(); 
             gameOverLabel.Visible = false;
             retryButton.Visible = false;
             levelNumber.Visible = false;
@@ -43,32 +45,38 @@ namespace Floppy_Game_by_I_M_Marinov
             initialObstacleBottom2X = obstacleBottom2.Left;
             initialObstacleTop2X = obstacleTop2.Left;
             initialDoggieY = doggie.Top;
-            Sounds.InitializeBackgroundMusic();
+            _soundEffects.InitializeBackgroundMusic();
 
         }
         public Label StatusTextLabel
         {
             get { return statusTextLabel; }
+            set { statusTextLabel = value; }
         }
         public Label SaveScoresLabel
         {
             get { return saveScoresLabel; }
+            set { saveScoresLabel = value; }
         }
         public Label NameLabel
         {
             get { return nameLabel; }
+            set { nameLabel = value; }
         }
         public TextBox ScoresTextBox
         {
             get { return scoresTextBox; }
+            set { scoresTextBox = value; }
         }
         public Button SubmitScoresButton
         {
             get { return submitScoresButton; }
+            set { submitScoresButton = value; }
         }
         public Button ResetAllScoresButton
         {
             get { return resetAllScoresButton; }
+            set { resetAllScoresButton = value; }
         }
 
 
@@ -80,6 +88,8 @@ namespace Floppy_Game_by_I_M_Marinov
         private bool _speedIncreasedAlready = false;
         int lastCheckedScore = 0;
         readonly DateTime date = DateTime.Now;
+        private readonly ScoreManipulation _scoreManipulation;
+        private Sounds _soundEffects;
 
 
         private void StartGame()
@@ -106,7 +116,7 @@ namespace Floppy_Game_by_I_M_Marinov
 
             if (CheckCollision())
             {
-                Sounds.HitAnObstacleSound();
+                _soundEffects.HitAnObstacleSound();
                 gameOver();
             }
 
@@ -124,7 +134,7 @@ namespace Floppy_Game_by_I_M_Marinov
         {
             if (e.KeyCode == Keys.Down)
             {
-                Sounds.PlayUpAndDownSounds();
+                _soundEffects.PlayUpAndDownSounds();
                 gravity = 3;
             }
         }
@@ -133,7 +143,7 @@ namespace Floppy_Game_by_I_M_Marinov
         {
             if (e.KeyCode == Keys.Up)
             {
-                Sounds.PlayUpAndDownSounds();
+                _soundEffects.PlayUpAndDownSounds();
                 gravity = -3;
             }
         }
@@ -162,11 +172,11 @@ namespace Floppy_Game_by_I_M_Marinov
             obstacleTop.Left = initialObstacleTopX;
             obstacleBottom2.Left = initialObstacleBottom2X;
             obstacleTop2.Left = initialObstacleTop2X;
-            gameOverLabel.Visible = false;
+            gameOverLabel.Visible = false; // Hide the game over label 
             retryButton.Visible = false; // Hide the retry button before restarting the game
-            levelNumber.Visible = true;
-            quitButton.Visible = false;
-            ScoreManipulation.HighScoresHide();
+            levelNumber.Visible = true; // Show the level number
+            quitButton.Visible = false; // Hide the quit button
+            _scoreManipulation.HighScoresHide();
             statusTextLabel.Text = "";
             timer.Start();
         }
@@ -190,7 +200,7 @@ namespace Floppy_Game_by_I_M_Marinov
             retryButton.Visible = true;
             quitButton.Visible = true;
             HideAllObstacles();
-            ScoreManipulation.HighScoresShow();
+            _scoreManipulation.HighScoresShow();
 
         }
 
@@ -198,18 +208,18 @@ namespace Floppy_Game_by_I_M_Marinov
         {
 
             string playerName = scoresTextBox.Text;
-            int highestScore = ScoreManipulation.GetHighestScoreForUser(playerName);
+            int highestScore = _scoreManipulation.GetHighestScoreForUser(playerName);
             if (playerName == "")
             {
                 statusTextLabel.Text = "You need to write a name in to save your score! ";
             }
             /* if the list of usernames contains the username and the current score is bigger than the highest score recorded in the TXT file and if the highest score in the file is not 0 */
-            else if (ScoreManipulation.usernameList.Contains(playerName) && score > highestScore && highestScore != 0)
+            else if (_scoreManipulation.UsernameList.Contains(playerName) && score > highestScore && highestScore != 0)
             {
-                ScoreManipulation.usernameList.Remove(playerName); // remove the last score saved for that username from the private LIST
-                ScoreManipulation.RemoveScoreFromFile(playerName); // remove the score from the TXT file
-                ScoreManipulation.usernameList.Add(playerName); // add the new score to the list
-                ScoreManipulation.SaveTheScore(playerName, score, level, date); // add the new score to the TXT file 
+                _scoreManipulation.UsernameList.Remove(playerName); // remove the last score saved for that username from the private LIST
+                _scoreManipulation.RemoveScoreFromFile(playerName); // remove the score from the TXT file
+                _scoreManipulation.UsernameList.Add(playerName); // add the new score to the list
+                _scoreManipulation.SaveTheScore(playerName, score, level, date); // add the new score to the TXT file 
                 scoresTextBox.Text = "";
                 statusTextLabel.Text = $"{playerName}'s has a new high score --> {score}.";
 
@@ -220,10 +230,10 @@ namespace Floppy_Game_by_I_M_Marinov
             }
             else
             {
-                ScoreManipulation.SaveTheScore(playerName, score, level, date);
+                _scoreManipulation.SaveTheScore(playerName, score, level, date);
                 scoresTextBox.Text = "";
                 statusTextLabel.Text = $"{playerName} your score has been saved successfully !";
-                ScoreManipulation.usernameList.Add(playerName);
+                _scoreManipulation.UsernameList.Add(playerName);
             }
         }
 
@@ -274,7 +284,7 @@ namespace Floppy_Game_by_I_M_Marinov
 
             if (result == DialogResult.Yes)
             {
-                ScoreManipulation.DeleteScores();
+                _scoreManipulation.DeleteScores();
             }
         }
 

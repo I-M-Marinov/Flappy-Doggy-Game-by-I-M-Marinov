@@ -5,14 +5,15 @@ using System.Linq;
 using System.Media;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace Floppy_Game_by_I_M_Marinov.Methods
 {
     public class Sounds
     {
 
-        private static WaveOutEvent _backgroundMusicPlayer;
-        private static SoundPlayer _effectsSoundPlayer;
+        private WaveOutEvent _backgroundMusicPlayer;
+        private  SoundPlayer _effectsSoundPlayer;
 
         public Sounds()
         {
@@ -21,20 +22,23 @@ namespace Floppy_Game_by_I_M_Marinov.Methods
         }
 
 
-        public static void InitializeBackgroundMusic()
+        public void InitializeBackgroundMusic()
         {
             string path = Application.StartupPath + @"\backgroundMusic.wav";
             if (File.Exists(path))
             {
-                _backgroundMusicPlayer = new WaveOutEvent();
                 var audioFileReader = new AudioFileReader(path);
                 _backgroundMusicPlayer.Init(audioFileReader);
                 _backgroundMusicPlayer.Play();
-                _backgroundMusicPlayer.PlaybackStopped += (s, e) => audioFileReader.Position = 0; // Loop the music
+                _backgroundMusicPlayer.PlaybackStopped += (s, e) =>
+                {
+                    audioFileReader.Position = 0; // Reset position to loop
+                    _backgroundMusicPlayer.Play(); // Restart playback
+                };
             }
         }
 
-        public static void PlayUpAndDownSounds()
+        public void PlayUpAndDownSounds()
         {
             var path = Application.StartupPath + @"\upAndDown.wav";
             if (File.Exists(path))
@@ -44,7 +48,7 @@ namespace Floppy_Game_by_I_M_Marinov.Methods
             }
         }
 
-        public static void HitAnObstacleSound()
+        public void HitAnObstacleSound()
         {
             var path = Application.StartupPath + @"\hitObstacle.wav";
             if (File.Exists(path))
