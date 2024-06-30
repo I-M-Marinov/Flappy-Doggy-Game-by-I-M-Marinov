@@ -43,69 +43,49 @@ namespace Floppy_Game_by_I_M_Marinov
             initialObstacleBottom2X = obstacleBottom2.Left;
             initialObstacleTop2X = obstacleTop2.Left;
             initialDoggieY = doggie.Top;
-            InitializeBackgroundMusic();
+            Sounds.InitializeBackgroundMusic();
 
         }
         public Label StatusTextLabel
         {
             get { return statusTextLabel; }
         }
+        public Label SaveScoresLabel
+        {
+            get { return saveScoresLabel; }
+        }
+        public Label NameLabel
+        {
+            get { return nameLabel; }
+        }
+        public TextBox ScoresTextBox
+        {
+            get { return scoresTextBox; }
+        }
+        public Button SubmitScoresButton
+        {
+            get { return submitScoresButton; }
+        }
+        public Button ResetAllScoresButton
+        {
+            get { return resetAllScoresButton; }
+        }
+
 
         // public variables
         int obstacleSpeed = 3; // movement speed of the obstacles
         int level = 1;
         int gravity = 3; // movement of doggy 
         int score = 0; // scores 
-        private bool speedIncreasedAlready = false;
+        private bool _speedIncreasedAlready = false;
         int lastCheckedScore = 0;
         readonly DateTime date = DateTime.Now;
 
-        // private variables 
-       // private List<string> usernameList = new();
-        static readonly string path = "HighScores.txt";
-        private WaveOutEvent _backgroundMusicPlayer;
-        private SoundPlayer _effectsSoundPlayer;
-
-
-        private void InitializeBackgroundMusic()
-        {
-            string path = Application.StartupPath + @"\backgroundMusic.wav";
-            if (File.Exists(path))
-            {
-                _backgroundMusicPlayer = new WaveOutEvent();
-                var audioFileReader = new AudioFileReader(path);
-                _backgroundMusicPlayer.Init(audioFileReader);
-                _backgroundMusicPlayer.Play();
-                _backgroundMusicPlayer.PlaybackStopped += (s, e) => audioFileReader.Position = 0; // Loop the music
-            }
-        }
 
         private void StartGame()
         {
             timer.Start();
         }
-
-
-        private void PlayUpAndDownSounds()
-        {
-            var path = Application.StartupPath + @"\upAndDown.wav";
-            if (File.Exists(path))
-            {
-                _effectsSoundPlayer = new SoundPlayer(path);
-                _effectsSoundPlayer.Play();
-            }
-        }
-
-        private void HitAnObstacleSound()
-        {
-            var path = Application.StartupPath + @"\hitObstacle.wav";
-            if (File.Exists(path))
-            {
-                _effectsSoundPlayer = new SoundPlayer(path);
-                _effectsSoundPlayer.Play();
-            }
-        }
-
 
         private void timer_Tick(object sender, EventArgs e)
         {
@@ -126,17 +106,17 @@ namespace Floppy_Game_by_I_M_Marinov
 
             if (CheckCollision())
             {
-                HitAnObstacleSound();
+                Sounds.HitAnObstacleSound();
                 gameOver();
             }
 
-            if (score % 20 == 0 && score > 0 && !speedIncreasedAlready)
+            if (score % 20 == 0 && score > 0 && !_speedIncreasedAlready)
             {
                 IncreaseGameSpeed(score);
             }
             else if (score % 20 != 0)
             {
-                speedIncreasedAlready = false;
+                _speedIncreasedAlready = false;
             }
         }
 
@@ -144,7 +124,7 @@ namespace Floppy_Game_by_I_M_Marinov
         {
             if (e.KeyCode == Keys.Down)
             {
-                PlayUpAndDownSounds();
+                Sounds.PlayUpAndDownSounds();
                 gravity = 3;
             }
         }
@@ -153,7 +133,7 @@ namespace Floppy_Game_by_I_M_Marinov
         {
             if (e.KeyCode == Keys.Up)
             {
-                PlayUpAndDownSounds();
+                Sounds.PlayUpAndDownSounds();
                 gravity = -3;
             }
         }
@@ -186,7 +166,7 @@ namespace Floppy_Game_by_I_M_Marinov
             retryButton.Visible = false; // Hide the retry button before restarting the game
             levelNumber.Visible = true;
             quitButton.Visible = false;
-            HighScoresShowAndHide();
+            ScoreManipulation.HighScoresHide();
             statusTextLabel.Text = "";
             timer.Start();
         }
@@ -210,7 +190,7 @@ namespace Floppy_Game_by_I_M_Marinov
             retryButton.Visible = true;
             quitButton.Visible = true;
             HideAllObstacles();
-            HighScoresShowAndHide();
+            ScoreManipulation.HighScoresShow();
 
         }
 
@@ -287,29 +267,6 @@ namespace Floppy_Game_by_I_M_Marinov
                 || doggie.Bounds.IntersectsWith(obstacleTop.Bounds) || doggie.Bounds.IntersectsWith(obstacleTop2.Bounds) || doggie.Bounds.IntersectsWith(grass.Bounds) || doggie.Top < -15;
         }
 
-        private void HighScoresShowAndHide()
-        {
-            if (!saveScoresLabel.Visible && !nameLabel.Visible  &&
-                !scoresTextBox.Visible && !submitScoresButton.Visible && 
-                !resetAllScoresButton.Visible && !statusTextLabel.Visible )
-            {
-                saveScoresLabel.Visible = true;
-                nameLabel.Visible = true;
-                scoresTextBox.Visible = true;
-                submitScoresButton.Visible = true;
-                resetAllScoresButton.Visible = true;
-                statusTextLabel.Visible = true;
-            }
-            else
-            {
-                saveScoresLabel.Visible = false;
-                nameLabel.Visible = false;
-                scoresTextBox.Visible = false;
-                submitScoresButton.Visible = false;
-                resetAllScoresButton.Visible = false;
-                statusTextLabel.Visible = false;
-            }
-        }
 
         private void resetAllScores_Click(object sender, EventArgs e)
         {

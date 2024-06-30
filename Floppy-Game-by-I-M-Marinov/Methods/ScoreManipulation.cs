@@ -15,12 +15,18 @@ namespace Floppy_Game_by_I_M_Marinov.Methods
         public static Form1 _form1;
         public static List<string> usernameList = new();
 
+        private readonly Label _saveScoresLabel = _form1.SaveScoresLabel;
+        private readonly Label _nameLabel = _form1.NameLabel;
+        private readonly Label _statusTextLabel = _form1.StatusTextLabel;
+        private readonly TextBox _scoresTextBox = _form1.ScoresTextBox;
+        private readonly Button _submitScoresButton = _form1.SubmitScoresButton;
+        private readonly Button _resetAllScoresButton = _form1.ResetAllScoresButton;
+
 
         public ScoreManipulation(Form1 form)
         {
             _form1 = form;
         }
-
 
 
         public static void SaveTheScore(string name, int score, int level, DateTime date)
@@ -127,6 +133,36 @@ namespace Floppy_Game_by_I_M_Marinov.Methods
                         }
                     }
                 }
+            }
+        }
+        public static void HighScoresShow()
+        {
+            if (!_saveScoresLabel.Visible && !_nameLabel.Visible &&
+                !_scoresTextBox.Visible && !_submitScoresButton.Visible &&
+                !_resetAllScoresButton.Visible && !_statusTextLabel.Visible)
+            {
+                _saveScoresLabel.Visible = true;
+                _nameLabel.Visible = true;
+                _scoresTextBox.Visible = true;
+                _submitScoresButton.Visible = true;
+                _resetAllScoresButton.Visible = true;
+                _statusTextLabel.Visible = true;
+            }
+
+        }
+        public static void HighScoresHide()
+        {
+
+            if (_saveScoresLabel.Visible && _nameLabel.Visible &&
+                _scoresTextBox.Visible && _submitScoresButton.Visible &&
+                _resetAllScoresButton.Visible && _statusTextLabel.Visible)
+            {
+                _saveScoresLabel.Visible = false;
+                _nameLabel.Visible = false;
+                _scoresTextBox.Visible = false;
+                _submitScoresButton.Visible = false;
+                _resetAllScoresButton.Visible = false;
+                _statusTextLabel.Visible = false;
             }
         }
 
