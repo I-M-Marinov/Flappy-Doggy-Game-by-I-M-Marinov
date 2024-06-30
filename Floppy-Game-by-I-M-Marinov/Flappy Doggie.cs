@@ -20,9 +20,12 @@ namespace Floppy_Game_by_I_M_Marinov
         public Form1()
         {
             InitializeComponent();
-            _scoreManipulation = new ScoreManipulation(this);
+
+            _gameEngine = new GameEngine(this);
             _soundEffects = new Sounds();
+            _soundEffects.InitializeBackgroundMusic();
             _scoreManipulation.LoadNamesFromFile();
+            _scoreManipulation = new ScoreManipulation(this);
             this.FormBorderStyle = FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
             this.KeyPreview = true;
@@ -45,7 +48,6 @@ namespace Floppy_Game_by_I_M_Marinov
             initialObstacleBottom2X = obstacleBottom2.Left;
             initialObstacleTop2X = obstacleTop2.Left;
             initialDoggieY = doggie.Top;
-            _soundEffects.InitializeBackgroundMusic();
 
         }
         public Label StatusTextLabel
@@ -79,75 +81,96 @@ namespace Floppy_Game_by_I_M_Marinov
             set { resetAllScoresButton = value; }
         }
 
+        public PictureBox Doggie
+        {
+            get { return doggie; }
+            set { doggie = value; }
+        }
+        public PictureBox ObstacleTop
+        {
+            get { return obstacleTop; }
+            set { obstacleTop = value; }
+        }
+        public PictureBox ObstacleTop2
+        {
+            get { return obstacleTop2; }
+            set { obstacleTop2 = value; }
+        }
+        public PictureBox ObstacleBottom
+        {
+            get { return obstacleBottom; }
+            set { obstacleBottom = value; }
+        }
+        public PictureBox ObstacleBottom2
+        {
+            get { return obstacleBottom2; }
+            set { obstacleBottom2 = value; }
+        }
+        public PictureBox Grass
+        {
+            get { return grass; }
+            set { grass = value; }
+        }
 
-        // public variables
-        int obstacleSpeed = 3; // movement speed of the obstacles
-        int level = 1;
-        int gravity = 3; // movement of doggy 
-        int score = 0; // scores 
-        private bool _speedIncreasedAlready = false;
-        int lastCheckedScore = 0;
-        readonly DateTime date = DateTime.Now;
+
+        private readonly DateTime _date = DateTime.Now;
         private readonly ScoreManipulation _scoreManipulation;
-        private Sounds _soundEffects;
+        private readonly Sounds _soundEffects;
+        private readonly GameEngine _gameEngine;
 
 
         private void StartGame()
         {
             timer.Start();
         }
-
         private void timer_Tick(object sender, EventArgs e)
         {
-            doggie.Top += gravity;
+            doggie.Top += _gameEngine.gravity;
 
-            MoveObstacle(obstacleBottom);
-            MoveObstacle(obstacleTop);
-            MoveObstacle(obstacleBottom2);
-            MoveObstacle(obstacleTop2);
+            _gameEngine.MoveObstacle(obstacleBottom);
+            _gameEngine.MoveObstacle(obstacleTop);
+            _gameEngine.MoveObstacle(obstacleBottom2);
+            _gameEngine.MoveObstacle(obstacleTop2);
 
-            scoreText.Text = score.ToString();
-            levelNumber.Text = level.ToString();
+            scoreText.Text = _gameEngine.score.ToString();
+            levelNumber.Text = _gameEngine.level.ToString();
 
-            CheckAndResetObstacle(obstacleBottom);
-            CheckAndResetObstacle(obstacleTop);
-            CheckAndResetObstacle(obstacleBottom2);
-            CheckAndResetObstacle(obstacleTop2);
+            _gameEngine.CheckAndResetObstacle(obstacleBottom);
+            _gameEngine.CheckAndResetObstacle(obstacleTop);
+            _gameEngine.CheckAndResetObstacle(obstacleBottom2);
+            _gameEngine.CheckAndResetObstacle(obstacleTop2);
 
-            if (CheckCollision())
+            if (_gameEngine.CheckCollision())
             {
                 _soundEffects.HitAnObstacleSound();
                 gameOver();
             }
 
-            if (score % 20 == 0 && score > 0 && !_speedIncreasedAlready)
+            if (_gameEngine.score % 20 == 0 && _gameEngine.score > 0 && !_gameEngine._speedIncreasedAlready)
             {
-                IncreaseGameSpeed(score);
+                _gameEngine.IncreaseGameSpeed(_gameEngine.score);
             }
-            else if (score % 20 != 0)
+            else if (_gameEngine.score % 20 != 0)
             {
-                _speedIncreasedAlready = false;
+                _gameEngine._speedIncreasedAlready = false;
             }
         }
-
         private void onKeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Down)
             {
                 _soundEffects.PlayUpAndDownSounds();
-                gravity = 3;
+                _gameEngine.gravity = 3;
             }
         }
-
         private void onKeyUp(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Up)
             {
                 _soundEffects.PlayUpAndDownSounds();
-                gravity = -3;
+                _gameEngine.gravity = -3;
             }
         }
-
         private void startButton_Click(object sender, EventArgs e)
         {
             StartGame();
@@ -155,18 +178,17 @@ namespace Floppy_Game_by_I_M_Marinov
             levelNumber.Visible = true;
             Focus(); // Ensure the form has focus to capture key events
         }
-
         private void retryButton_Click(object sender, EventArgs e)
         {
             retryGame();
         }
         private void retryGame()
         {
-            score = 0;
-            gravity = 3;
-            obstacleSpeed = 3;
+            _gameEngine.score = 0;
+            _gameEngine.gravity = 3;
+            _gameEngine.obstacleSpeed = 3;
             /* call the doggy and obstacles's initial positions */
-            ShowAllObstacles();
+            _gameEngine.ShowAllObstacles();
             doggie.Top = initialDoggieY;
             obstacleBottom.Left = initialObstacleBottomX;
             obstacleTop.Left = initialObstacleTopX;
@@ -180,7 +202,6 @@ namespace Floppy_Game_by_I_M_Marinov
             statusTextLabel.Text = "";
             timer.Start();
         }
-
         private void quitButton_Click(object sender, EventArgs e)
         {
 
@@ -191,7 +212,6 @@ namespace Floppy_Game_by_I_M_Marinov
                 Environment.Exit(500);
             }
         }
-
         private void gameOver()
         {
             timer.Stop();
@@ -199,11 +219,10 @@ namespace Floppy_Game_by_I_M_Marinov
             gameOverLabel.Visible = true;
             retryButton.Visible = true;
             quitButton.Visible = true;
-            HideAllObstacles();
+            _gameEngine.HideAllObstacles();
             _scoreManipulation.HighScoresShow();
 
         }
-
         private void submitScoresButton_Click(object sender, EventArgs e)
         {
 
@@ -214,70 +233,28 @@ namespace Floppy_Game_by_I_M_Marinov
                 statusTextLabel.Text = "You need to write a name in to save your score! ";
             }
             /* if the list of usernames contains the username and the current score is bigger than the highest score recorded in the TXT file and if the highest score in the file is not 0 */
-            else if (_scoreManipulation.UsernameList.Contains(playerName) && score > highestScore && highestScore != 0)
+            else if (_scoreManipulation.UsernameList.Contains(playerName) && _gameEngine.score > highestScore && highestScore != 0)
             {
                 _scoreManipulation.UsernameList.Remove(playerName); // remove the last score saved for that username from the private LIST
                 _scoreManipulation.RemoveScoreFromFile(playerName); // remove the score from the TXT file
                 _scoreManipulation.UsernameList.Add(playerName); // add the new score to the list
-                _scoreManipulation.SaveTheScore(playerName, score, level, date); // add the new score to the TXT file 
+                _scoreManipulation.SaveTheScore(playerName, _gameEngine.score, _gameEngine.level, _date); // add the new score to the TXT file 
                 scoresTextBox.Text = "";
-                statusTextLabel.Text = $"{playerName}'s has a new high score --> {score}.";
+                statusTextLabel.Text = $"{playerName}'s has a new high score --> {_gameEngine.score}.";
 
             }
-            else if (score < highestScore)
+            else if (_gameEngine.score < highestScore)
             {
                 statusTextLabel.Text = $"{playerName}'s highest score is {highestScore}. Try again !";
             }
             else
             {
-                _scoreManipulation.SaveTheScore(playerName, score, level, date);
+                _scoreManipulation.SaveTheScore(playerName, _gameEngine.score, _gameEngine.level, _date);
                 scoresTextBox.Text = "";
                 statusTextLabel.Text = $"{playerName} your score has been saved successfully !";
                 _scoreManipulation.UsernameList.Add(playerName);
             }
         }
-
-        private void IncreaseGameSpeed(int score)
-        {
-            if (score % 20 == 0 && score > lastCheckedScore)
-            {
-                obstacleSpeed += 1;
-                lastCheckedScore = score;
-                level++;
-            }
-        }
-
-        private void MoveObstacle(PictureBox obstacle)
-        {
-            obstacle.Left -= obstacleSpeed;
-        }
-
-        private bool IsOffScreen(PictureBox obstacle)
-        {
-            return obstacle.Left < -obstacle.Width;
-        }
-
-        private void ResetObstaclePosition(PictureBox obstacle)
-        {
-            obstacle.Left = 950;
-        }
-
-        private void CheckAndResetObstacle(PictureBox obstacle)
-        {
-            if (IsOffScreen(obstacle))
-            {
-                ResetObstaclePosition(obstacle);
-                score++;
-            }
-        }
-
-        private bool CheckCollision()
-        {
-            return doggie.Bounds.IntersectsWith(obstacleBottom.Bounds) || doggie.Bounds.IntersectsWith(obstacleBottom2.Bounds)
-                || doggie.Bounds.IntersectsWith(obstacleTop.Bounds) || doggie.Bounds.IntersectsWith(obstacleTop2.Bounds) || doggie.Bounds.IntersectsWith(grass.Bounds) || doggie.Top < -15;
-        }
-
-
         private void resetAllScores_Click(object sender, EventArgs e)
         {
             DialogResult result = MessageBox.Show($"Are you sure you want to delete all saved scores ?", "Confirm Deletion", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
@@ -288,21 +265,5 @@ namespace Floppy_Game_by_I_M_Marinov
             }
         }
 
-        private void HideAllObstacles()
-        {
-            obstacleBottom.Visible = false;
-            obstacleTop.Visible = false;
-            obstacleBottom2.Visible = false;
-            obstacleTop2.Visible = false;
-        }
-
-        private void ShowAllObstacles()
-        {
-            obstacleBottom.Visible = true;
-            obstacleTop.Visible = true;
-            obstacleBottom2.Visible = true;
-            obstacleTop2.Visible = true;
-        }
-        
     }
 }

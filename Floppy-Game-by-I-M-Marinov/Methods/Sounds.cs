@@ -12,14 +12,8 @@ namespace Floppy_Game_by_I_M_Marinov.Methods
     public class Sounds
     {
 
-        private WaveOutEvent _backgroundMusicPlayer;
-        private  SoundPlayer _effectsSoundPlayer;
-
-        public Sounds()
-        {
-            _backgroundMusicPlayer = new WaveOutEvent();
-            _effectsSoundPlayer = new SoundPlayer();
-        }
+        private WaveOutEvent _backgroundMusicPlayer = new();
+        private SoundPlayer _effectsSoundPlayer = new();
 
 
         public void InitializeBackgroundMusic()
@@ -37,7 +31,6 @@ namespace Floppy_Game_by_I_M_Marinov.Methods
                 };
             }
         }
-
         public void PlayUpAndDownSounds()
         {
             var path = Application.StartupPath + @"\upAndDown.wav";
@@ -47,7 +40,6 @@ namespace Floppy_Game_by_I_M_Marinov.Methods
                 _effectsSoundPlayer.Play();
             }
         }
-
         public void HitAnObstacleSound()
         {
             var path = Application.StartupPath + @"\hitObstacle.wav";
@@ -57,5 +49,6 @@ namespace Floppy_Game_by_I_M_Marinov.Methods
                 _effectsSoundPlayer.Play();
             }
         }
+
     }
 }
