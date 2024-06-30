@@ -3,6 +3,7 @@ using NAudio.Wave;
 using System.Xml.Linq;
 using static System.Formats.Asn1.AsnWriter;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.Button;
+using Floppy_Game_by_I_M_Marinov.Methods;
 
 namespace Floppy_Game_by_I_M_Marinov
 {
@@ -22,7 +23,7 @@ namespace Floppy_Game_by_I_M_Marinov
             this.FormBorderStyle = FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
             this.KeyPreview = true;
-            LoadNamesFromFile(); 
+            ScoreManipulation.LoadNamesFromFile(); 
             gameOverLabel.Visible = false;
             retryButton.Visible = false;
             levelNumber.Visible = false;
@@ -35,7 +36,8 @@ namespace Floppy_Game_by_I_M_Marinov
             statusTextLabel.Visible = false;
             statusTextLabel.Text = "";
 
-            /* save the initial positions of the doggie and obstacles */
+            /* save the initial positions of the doggy and obstacles */
+
             initialObstacleBottomX = obstacleBottom.Left;
             initialObstacleTopX = obstacleTop.Left;
             initialObstacleBottom2X = obstacleBottom2.Left;
@@ -44,39 +46,26 @@ namespace Floppy_Game_by_I_M_Marinov
             InitializeBackgroundMusic();
 
         }
+        public Label StatusTextLabel
+        {
+            get { return statusTextLabel; }
+        }
 
         // public variables
         int obstacleSpeed = 3; // movement speed of the obstacles
         int level = 1;
-        int gravity = 3; // movement of doggie 
-        int score = 0; // scores ... ofc
+        int gravity = 3; // movement of doggy 
+        int score = 0; // scores 
         private bool speedIncreasedAlready = false;
         int lastCheckedScore = 0;
         readonly DateTime date = DateTime.Now;
-        private List<string> usernameList = new();
+
+        // private variables 
+       // private List<string> usernameList = new();
         static readonly string path = "HighScores.txt";
         private WaveOutEvent _backgroundMusicPlayer;
         private SoundPlayer _effectsSoundPlayer;
 
-
-        private void LoadNamesFromFile()
-        {
-            if (File.Exists(path))
-            {
-                using (StreamReader reader = new StreamReader(path))
-                {
-                    string line;
-                    while ((line = reader.ReadLine()) != null)
-                    {
-                        string name = ExtractNameFromLine(line);
-                        if (!string.IsNullOrEmpty(name) && !usernameList.Contains(name))
-                        {
-                            usernameList.Add(name);
-                        }
-                    }
-                }
-            }
-        }
 
         private void InitializeBackgroundMusic()
         {
@@ -90,6 +79,12 @@ namespace Floppy_Game_by_I_M_Marinov
                 _backgroundMusicPlayer.PlaybackStopped += (s, e) => audioFileReader.Position = 0; // Loop the music
             }
         }
+
+        private void StartGame()
+        {
+            timer.Start();
+        }
+
 
         private void PlayUpAndDownSounds()
         {
@@ -145,6 +140,113 @@ namespace Floppy_Game_by_I_M_Marinov
             }
         }
 
+        private void onKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Down)
+            {
+                PlayUpAndDownSounds();
+                gravity = 3;
+            }
+        }
+
+        private void onKeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Up)
+            {
+                PlayUpAndDownSounds();
+                gravity = -3;
+            }
+        }
+
+        private void startButton_Click(object sender, EventArgs e)
+        {
+            StartGame();
+            startButton.Visible = false;
+            levelNumber.Visible = true;
+            Focus(); // Ensure the form has focus to capture key events
+        }
+
+        private void retryButton_Click(object sender, EventArgs e)
+        {
+            retryGame();
+        }
+        private void retryGame()
+        {
+            score = 0;
+            gravity = 3;
+            obstacleSpeed = 3;
+            /* call the doggy and obstacles's initial positions */
+            ShowAllObstacles();
+            doggie.Top = initialDoggieY;
+            obstacleBottom.Left = initialObstacleBottomX;
+            obstacleTop.Left = initialObstacleTopX;
+            obstacleBottom2.Left = initialObstacleBottom2X;
+            obstacleTop2.Left = initialObstacleTop2X;
+            gameOverLabel.Visible = false;
+            retryButton.Visible = false; // Hide the retry button before restarting the game
+            levelNumber.Visible = true;
+            quitButton.Visible = false;
+            HighScoresShowAndHide();
+            statusTextLabel.Text = "";
+            timer.Start();
+        }
+
+        private void quitButton_Click(object sender, EventArgs e)
+        {
+
+            DialogResult result = MessageBox.Show($"Are you sure you want to quit ?", "Are you leaving ?", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+
+            if (result == DialogResult.Yes)
+            {
+                Environment.Exit(500);
+            }
+        }
+
+        private void gameOver()
+        {
+            timer.Stop();
+            gameOverLabel.Text = "Game Over !";
+            gameOverLabel.Visible = true;
+            retryButton.Visible = true;
+            quitButton.Visible = true;
+            HideAllObstacles();
+            HighScoresShowAndHide();
+
+        }
+
+        private void submitScoresButton_Click(object sender, EventArgs e)
+        {
+
+            string playerName = scoresTextBox.Text;
+            int highestScore = ScoreManipulation.GetHighestScoreForUser(playerName);
+            if (playerName == "")
+            {
+                statusTextLabel.Text = "You need to write a name in to save your score! ";
+            }
+            /* if the list of usernames contains the username and the current score is bigger than the highest score recorded in the TXT file and if the highest score in the file is not 0 */
+            else if (ScoreManipulation.usernameList.Contains(playerName) && score > highestScore && highestScore != 0)
+            {
+                ScoreManipulation.usernameList.Remove(playerName); // remove the last score saved for that username from the private LIST
+                ScoreManipulation.RemoveScoreFromFile(playerName); // remove the score from the TXT file
+                ScoreManipulation.usernameList.Add(playerName); // add the new score to the list
+                ScoreManipulation.SaveTheScore(playerName, score, level, date); // add the new score to the TXT file 
+                scoresTextBox.Text = "";
+                statusTextLabel.Text = $"{playerName}'s has a new high score --> {score}.";
+
+            }
+            else if (score < highestScore)
+            {
+                statusTextLabel.Text = $"{playerName}'s highest score is {highestScore}. Try again !";
+            }
+            else
+            {
+                ScoreManipulation.SaveTheScore(playerName, score, level, date);
+                scoresTextBox.Text = "";
+                statusTextLabel.Text = $"{playerName} your score has been saved successfully !";
+                ScoreManipulation.usernameList.Add(playerName);
+            }
+        }
+
         private void IncreaseGameSpeed(int score)
         {
             if (score % 20 == 0 && score > lastCheckedScore)
@@ -185,144 +287,6 @@ namespace Floppy_Game_by_I_M_Marinov
                 || doggie.Bounds.IntersectsWith(obstacleTop.Bounds) || doggie.Bounds.IntersectsWith(obstacleTop2.Bounds) || doggie.Bounds.IntersectsWith(grass.Bounds) || doggie.Top < -15;
         }
 
-        private void onKeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.Down)
-            {
-                PlayUpAndDownSounds();
-                gravity = 3;
-            }
-        }
-
-        private void onKeyUp(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.Up)
-            {
-                PlayUpAndDownSounds();
-                gravity = -3;
-            }
-        }
-
-        private void gameOver()
-        {
-            timer.Stop();
-            gameOverLabel.Text = "Game Over !";
-            gameOverLabel.Visible = true;
-            retryButton.Visible = true;
-            quitButton.Visible = true;
-            HideAllObstacles();
-            HighScoresShowAndHide();
-
-        }
-
-        private void StartGame()
-        {
-            timer.Start();
-        }
-
-
-        private void startButton_Click(object sender, EventArgs e)
-        {
-            StartGame();
-            startButton.Visible = false;
-            levelNumber.Visible = true;
-            Focus(); // Ensure the form has focus to capture key events
-        }
-
-        private void retryButton_Click(object sender, EventArgs e)
-        {
-            retryGame();
-        }
-
-        private void retryGame()
-        {
-            score = 0;
-            gravity = 3;
-            obstacleSpeed = 3;
-            /* call the doggy and obstacles's initial positions */
-            ShowAllObstacles();
-            doggie.Top = initialDoggieY;
-            obstacleBottom.Left = initialObstacleBottomX;
-            obstacleTop.Left = initialObstacleTopX;
-            obstacleBottom2.Left = initialObstacleBottom2X;
-            obstacleTop2.Left = initialObstacleTop2X;
-            gameOverLabel.Visible = false;
-            retryButton.Visible = false; // Hide the retry button before restarting the game
-            levelNumber.Visible = true;
-            quitButton.Visible = false;
-            HighScoresShowAndHide();
-            statusTextLabel.Text = "";
-            timer.Start();
-        }
-
-        private void quitButton_Click(object sender, EventArgs e)
-        {
-
-            DialogResult result = MessageBox.Show($"Are you sure you want to quit ?", "Are you leaving ?", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
-
-            if (result == DialogResult.Yes)
-            {
-                Environment.Exit(500);
-            }
-        }
-
-        private void SaveScore(string name, int score, int level, DateTime date)
-        {
-            string formattedScore = $"Name: {name} ----- Score: {score} ----- Level: {level} ----- Saved on: {date}";
-
-            using (StreamWriter writer = new StreamWriter(path, true))
-            {
-                writer.WriteLine(formattedScore);
-            }
-        }
-
-        private void DeleteScores()
-        {
-            if (File.Exists(path))
-            {
-                File.WriteAllText(path, string.Empty);
-                
-                statusTextLabel.Text = "All scores deleted successfully !";
-            }
-            else
-            {
-                statusTextLabel.Text = "There are no scores saved as of now !";
-            }
-        }
-
-        private void submitScoresButton_Click(object sender, EventArgs e)
-        {
-
-            string playerName = scoresTextBox.Text;
-            int highestScore = GetHighestScoreForUser(playerName);
-            if (playerName == "")
-            {
-                statusTextLabel.Text = "You need to write a name in to save your score! ";
-            }
-        /* if the list of usernames contains the username and the current score is bigger than the highest score recorded in the TXT file and if the highest score in the file is not 0 */
-            else if (usernameList.Contains(playerName) && score > highestScore && highestScore != 0) 
-            {
-                usernameList.Remove(playerName); // remove the last score saved for that username from the private LIST
-                RemoveScoreFromFile(playerName); // remove the score from the TXT file
-                usernameList.Add(playerName); // add the new score to the list
-                SaveScore(playerName, score, level, date); // add the new score to the TXT file 
-                scoresTextBox.Text = "";
-                statusTextLabel.Text = $"{playerName}'s has a new high score --> {score}.";
-                
-            }
-            else if (score < highestScore)
-            {
-                statusTextLabel.Text = $"{playerName}'s highest score is {highestScore}. Try again !";
-            }
-            else
-            {
-                SaveScore(playerName, score, level, date);
-                scoresTextBox.Text = "";
-                statusTextLabel.Text = $"{playerName} your score has been saved successfully !";
-                usernameList.Add(playerName);
-            }
-        }
-
         private void HighScoresShowAndHide()
         {
             if (!saveScoresLabel.Visible && !nameLabel.Visible  &&
@@ -353,7 +317,7 @@ namespace Floppy_Game_by_I_M_Marinov
 
             if (result == DialogResult.Yes)
             {
-                DeleteScores();
+                ScoreManipulation.DeleteScores();
             }
         }
 
@@ -372,72 +336,6 @@ namespace Floppy_Game_by_I_M_Marinov
             obstacleBottom2.Visible = true;
             obstacleTop2.Visible = true;
         }
-
-        private void RemoveScoreFromFile(string name)
-        {
-            string tempFile = Path.GetTempFileName();
-            using (var reader = new StreamReader(path))
-            using (var writer = new StreamWriter(tempFile))
-            {
-                string line;
-                while ((line = reader.ReadLine()) != null)
-                {
-                    if (!line.Contains($"Name: {name} ----- "))
-                    {
-                        writer.WriteLine(line);
-                    }
-                }
-            }
-            File.Delete(path);
-            File.Move(tempFile, path);
-        }
-
-        private string ExtractNameFromLine(string line)
-        {
-        string namePrefix = "Name: ";
-        string nameSuffix = " ----- Score: ";
-
-        int nameStartIndex = line.IndexOf(namePrefix) + namePrefix.Length;
-        int nameEndIndex = line.IndexOf(nameSuffix);
-
-        if (nameStartIndex >= 0 && nameEndIndex > nameStartIndex)
-        {
-            return line.Substring(nameStartIndex, nameEndIndex - nameStartIndex);
-        }
-
-        return null;
-        }
-
-        private int GetHighestScoreForUser(string name)
-        {
-
-            int highestScore = 0;
-
-            using (StreamReader reader = new StreamReader(path))
-            {
-                string line;
-                while ((line = reader.ReadLine()) != null)
-                {
-                    if (line.Contains($"Name: {name} ----- Score: "))
-                    {
-                        string[] tokens = line.Split(new string[] { "-----" }, 0);
-                        foreach (string part in tokens)
-                        {
-                            if (part.Trim().StartsWith("Score:"))
-                            {
-                                int score = int.Parse(part.Trim().Substring(7));
-
-                                if (score > highestScore)
-                                {
-                                    highestScore = score;
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-
-            return highestScore;
-        }
+        
     }
 }
