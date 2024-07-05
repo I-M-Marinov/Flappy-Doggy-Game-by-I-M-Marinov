@@ -16,6 +16,11 @@ namespace Floppy_Game_by_I_M_Marinov
         private int initialObstacleTop2X;
         private int initialDoggieY;
 
+        private readonly DateTime _date = DateTime.Now;
+        private readonly ScoreManipulation _scoreManipulation;
+        private readonly Sounds _soundEffects;
+        private readonly GameEngine _gameEngine;
+
 
         public Form1()
         {
@@ -23,9 +28,9 @@ namespace Floppy_Game_by_I_M_Marinov
 
             _gameEngine = new GameEngine(this);
             _soundEffects = new Sounds();
+            _scoreManipulation = new ScoreManipulation(this);
             _soundEffects.InitializeBackgroundMusic();
             _scoreManipulation.LoadNamesFromFile();
-            _scoreManipulation = new ScoreManipulation(this);
             this.FormBorderStyle = FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
             this.KeyPreview = true;
@@ -113,10 +118,6 @@ namespace Floppy_Game_by_I_M_Marinov
         }
 
 
-        private readonly DateTime _date = DateTime.Now;
-        private readonly ScoreManipulation _scoreManipulation;
-        private readonly Sounds _soundEffects;
-        private readonly GameEngine _gameEngine;
 
 
         private void StartGame()
@@ -149,6 +150,7 @@ namespace Floppy_Game_by_I_M_Marinov
             if (_gameEngine.score % 20 == 0 && _gameEngine.score > 0 && !_gameEngine._speedIncreasedAlready)
             {
                 _gameEngine.IncreaseGameSpeed(_gameEngine.score);
+                _soundEffects.UpOneLevelSound();
             }
             else if (_gameEngine.score % 20 != 0)
             {
@@ -173,6 +175,7 @@ namespace Floppy_Game_by_I_M_Marinov
         }
         private void startButton_Click(object sender, EventArgs e)
         {
+            _soundEffects.ButtonClickSound();
             StartGame();
             startButton.Visible = false;
             levelNumber.Visible = true;
@@ -180,6 +183,7 @@ namespace Floppy_Game_by_I_M_Marinov
         }
         private void retryButton_Click(object sender, EventArgs e)
         {
+            _soundEffects.ButtonClickSound();
             retryGame();
         }
         private void retryGame()
@@ -204,6 +208,7 @@ namespace Floppy_Game_by_I_M_Marinov
         }
         private void quitButton_Click(object sender, EventArgs e)
         {
+            _soundEffects.ButtonClickSound();
 
             DialogResult result = MessageBox.Show($"Are you sure you want to quit ?", "Are you leaving ?", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
 
@@ -225,6 +230,7 @@ namespace Floppy_Game_by_I_M_Marinov
         }
         private void submitScoresButton_Click(object sender, EventArgs e)
         {
+            _soundEffects.ButtonClickSound();
 
             string playerName = scoresTextBox.Text;
             int highestScore = _scoreManipulation.GetHighestScoreForUser(playerName);
@@ -257,6 +263,8 @@ namespace Floppy_Game_by_I_M_Marinov
         }
         private void resetAllScores_Click(object sender, EventArgs e)
         {
+            _soundEffects.ButtonClickSound();
+
             DialogResult result = MessageBox.Show($"Are you sure you want to delete all saved scores ?", "Confirm Deletion", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
 
             if (result == DialogResult.Yes)

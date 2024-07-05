@@ -50,5 +50,24 @@ namespace Floppy_Game_by_I_M_Marinov.Methods
             }
         }
 
+        public void ButtonClickSound()
+        {
+            var path = Application.StartupPath + @"\buttonClick.wav";
+            if (File.Exists(path))
+            {
+                _effectsSoundPlayer = new SoundPlayer(path);
+                _effectsSoundPlayer.Play();
+            }
+        }
+
+        public void UpOneLevelSound()
+        {
+            var path = Application.StartupPath + @"\levelChange.wav";
+            if (File.Exists(path))
+            {
+                _effectsSoundPlayer = new SoundPlayer(path);
+                _effectsSoundPlayer.Play();
+            }
+        }
     }
 }
