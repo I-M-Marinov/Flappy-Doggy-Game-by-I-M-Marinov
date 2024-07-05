@@ -327,8 +327,8 @@
             Controls.Add(obstacleBottom);
             Name = "Form1";
             Text = "Flappy Doggy";
-            KeyDown += onKeyDown;
-            KeyUp += onKeyUp;
+            KeyDown += OnKeyDown;
+            KeyUp += OnKeyUp;
             ((System.ComponentModel.ISupportInitialize)obstacleBottom).EndInit();
             ((System.ComponentModel.ISupportInitialize)doggie).EndInit();
             ((System.ComponentModel.ISupportInitialize)grass).EndInit();

@@ -17,6 +17,7 @@ namespace Floppy_Game_by_I_M_Marinov.Methods
         public bool _speedIncreasedAlready = false;
 
 
+
         private readonly Form1 _form1;
 
         public GameEngine(Form1 form)
