@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Floppy_Game_by_I_M_Marinov.Validation;
 using static System.Net.Mime.MediaTypeNames;
 
 namespace Floppy_Game_by_I_M_Marinov.Methods
@@ -56,12 +57,12 @@ namespace Floppy_Game_by_I_M_Marinov.Methods
             {
                 File.WriteAllText(Path, string.Empty);
 
-                _form1.StatusTextLabel.Text = "All scores deleted successfully !";
+                _form1.StatusTextLabel.Text = ValidationMessages.AllScoresDeletedSuccessfully;
 
             }
             else
             {
-                _form1.StatusTextLabel.Text = "There are no scores saved as of now !";
+                _form1.StatusTextLabel.Text = ValidationMessages.NoScoresSaved;
             }
         }
         public int GetHighestScoreForUser(string name)
