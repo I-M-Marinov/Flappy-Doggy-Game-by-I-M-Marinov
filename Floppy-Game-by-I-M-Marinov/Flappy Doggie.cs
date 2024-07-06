@@ -4,6 +4,7 @@ using System.Xml.Linq;
 using static System.Formats.Asn1.AsnWriter;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.Button;
 using Floppy_Game_by_I_M_Marinov.Methods;
+using Floppy_Game_by_I_M_Marinov.Validation;
 
 namespace Floppy_Game_by_I_M_Marinov
 {
@@ -210,7 +211,7 @@ namespace Floppy_Game_by_I_M_Marinov
         {
             _soundEffects.ButtonClickSound();
 
-            DialogResult result = MessageBox.Show($"Are you sure you want to quit ?", "Are you leaving ?", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+            DialogResult result = MessageBox.Show(ValidationMessages.ConfirmQuitMessage, ValidationMessages.ConfirmQuitMessageCaption, MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
 
             if (result == DialogResult.Yes)
             {
@@ -220,7 +221,7 @@ namespace Floppy_Game_by_I_M_Marinov
         private void gameOver()
         {
             timer.Stop();
-            gameOverLabel.Text = "Game Over !";
+            gameOverLabel.Text = ValidationMessages.GameOverMessage;
             gameOverLabel.Visible = true;
             retryButton.Visible = true;
             quitButton.Visible = true;
@@ -236,7 +237,7 @@ namespace Floppy_Game_by_I_M_Marinov
             int highestScore = _scoreManipulation.GetHighestScoreForUser(playerName);
             if (playerName == "")
             {
-                statusTextLabel.Text = "You need to write a name in to save your score! ";
+                statusTextLabel.Text = ValidationMessages.WriteANameMessage;
             }
             /* if the list of usernames contains the username and the current score is bigger than the highest score recorded in the TXT file and if the highest score in the file is not 0 */
             else if (_scoreManipulation.UsernameList.Contains(playerName) && _gameEngine.score > highestScore && highestScore != 0)
@@ -246,18 +247,18 @@ namespace Floppy_Game_by_I_M_Marinov
                 _scoreManipulation.UsernameList.Add(playerName); // add the new score to the list
                 _scoreManipulation.SaveTheScore(playerName, _gameEngine.score, _gameEngine.level, _date); // add the new score to the TXT file 
                 scoresTextBox.Text = "";
-                statusTextLabel.Text = $"{playerName}'s has a new high score --> {_gameEngine.score}.";
+                statusTextLabel.Text = string.Format(ValidationMessages.NewHighScoreMessage, playerName, _gameEngine.score);
 
             }
             else if (_gameEngine.score < highestScore)
             {
-                statusTextLabel.Text = $"{playerName}'s highest score is {highestScore}. Try again !";
+                statusTextLabel.Text = string.Format(ValidationMessages.DidNotBeatHighScoreMessage, playerName, highestScore);
             }
             else
             {
                 _scoreManipulation.SaveTheScore(playerName, _gameEngine.score, _gameEngine.level, _date);
                 scoresTextBox.Text = "";
-                statusTextLabel.Text = $"{playerName} your score has been saved successfully !";
+                statusTextLabel.Text = string.Format(ValidationMessages.ScoreSavedSuccessfully, playerName);
                 _scoreManipulation.UsernameList.Add(playerName);
             }
         }
@@ -265,7 +266,7 @@ namespace Floppy_Game_by_I_M_Marinov
         {
             _soundEffects.ButtonClickSound();
 
-            DialogResult result = MessageBox.Show($"Are you sure you want to delete all saved scores ?", "Confirm Deletion", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+            DialogResult result = MessageBox.Show(ValidationMessages.ConfirmDeleteMessage, ValidationMessages.ConfirmDeleteMessageCaption, MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
 
             if (result == DialogResult.Yes)
             {
