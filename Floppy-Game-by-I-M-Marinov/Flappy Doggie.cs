@@ -150,15 +150,16 @@ namespace Floppy_Game_by_I_M_Marinov
 
             if (_gameEngine.score % 20 == 0 && _gameEngine.score > 0 && !_gameEngine._speedIncreasedAlready)
             {
-                _gameEngine.IncreaseGameSpeed(_gameEngine.score);
                 _soundEffects.UpOneLevelSound();
+                _gameEngine.IncreaseGameSpeed(_gameEngine.score);
+
             }
             else if (_gameEngine.score % 20 != 0)
             {
                 _gameEngine._speedIncreasedAlready = false;
             }
         }
-        private void onKeyDown(object sender, KeyEventArgs e)
+        private void OnKeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Down)
             {
@@ -166,7 +167,7 @@ namespace Floppy_Game_by_I_M_Marinov
                 _gameEngine.gravity = 3;
             }
         }
-        private void onKeyUp(object sender, KeyEventArgs e)
+        private void OnKeyUp(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Up)
             {
@@ -184,11 +185,11 @@ namespace Floppy_Game_by_I_M_Marinov
         }
         private void retryButton_Click(object sender, EventArgs e)
         {
-            _soundEffects.ButtonClickSound();
             retryGame();
         }
         private void retryGame()
         {
+            _soundEffects.ButtonClickSound();
             _gameEngine.score = 0;
             _gameEngine.gravity = 3;
             _gameEngine.obstacleSpeed = 3;

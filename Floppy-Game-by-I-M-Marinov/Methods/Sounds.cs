@@ -12,13 +12,22 @@ namespace Floppy_Game_by_I_M_Marinov.Methods
     public class Sounds
     {
 
-        private WaveOutEvent _backgroundMusicPlayer = new();
-        private SoundPlayer _effectsSoundPlayer = new();
+        private  WaveOutEvent _backgroundMusicPlayer;
+        private  SoundPlayer _effectsSoundPlayer;
+        private const string basePath = @"C:\Users\Marinov\source\repos\Floppy-Game-by-I-M-Marinov\Floppy-Game-by-I-M-Marinov\Sounds";
+
+
+        public Sounds()
+        {
+            _backgroundMusicPlayer = new WaveOutEvent();
+            _effectsSoundPlayer = new SoundPlayer();
+        }
 
 
         public void InitializeBackgroundMusic()
         {
-            string path = Application.StartupPath + @"\backgroundMusic.wav";
+            
+            string path = System.IO.Path.Combine(basePath, "backgroundMusic.wav"); 
             if (File.Exists(path))
             {
                 var audioFileReader = new AudioFileReader(path);
@@ -33,7 +42,8 @@ namespace Floppy_Game_by_I_M_Marinov.Methods
         }
         public void PlayUpAndDownSounds()
         {
-            var path = Application.StartupPath + @"\upAndDown.wav";
+            string path = System.IO.Path.Combine(basePath, "upAndDown.wav");
+
             if (File.Exists(path))
             {
                 _effectsSoundPlayer = new SoundPlayer(path);
@@ -42,7 +52,7 @@ namespace Floppy_Game_by_I_M_Marinov.Methods
         }
         public void HitAnObstacleSound()
         {
-            var path = Application.StartupPath + @"\hitObstacle.wav";
+            string path = System.IO.Path.Combine(basePath, "hitObstacle.wav");
             if (File.Exists(path))
             {
                 _effectsSoundPlayer = new SoundPlayer(path);
@@ -52,7 +62,8 @@ namespace Floppy_Game_by_I_M_Marinov.Methods
 
         public void ButtonClickSound()
         {
-            var path = Application.StartupPath + @"\buttonClick.wav";
+            string path = System.IO.Path.Combine(basePath, "buttonClick.wav");
+
             if (File.Exists(path))
             {
                 _effectsSoundPlayer = new SoundPlayer(path);
@@ -62,7 +73,8 @@ namespace Floppy_Game_by_I_M_Marinov.Methods
 
         public void UpOneLevelSound()
         {
-            var path = Application.StartupPath + @"\levelChange.wav";
+            string path = System.IO.Path.Combine(basePath, "levelChange.wav");
+
             if (File.Exists(path))
             {
                 _effectsSoundPlayer = new SoundPlayer(path);
